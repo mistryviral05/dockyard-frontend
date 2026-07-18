@@ -12,6 +12,8 @@ import {
 } from "@/shared/components/ui/card"
 import { Input } from "@/shared/components/ui/input"
 
+import { AccountSwitcher } from "./account-switcher"
+
 type Repository = {
   id: string
   name: string
@@ -38,15 +40,20 @@ function GitRepositories() {
     <Card className="w-full max-w-xl">
       <CardHeader>
         <CardTitle className="text-lg">Import Git Repository</CardTitle>
-        <div className="relative mt-3">
-          <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
-          <Input
-            type="search"
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            placeholder="Search repositories..."
-            className="pl-9"
-          />
+        <div className="mt-3 flex flex-col gap-2 sm:flex-row">
+          <div className="sm:w-52">
+            <AccountSwitcher />
+          </div>
+          <div className="relative flex-1">
+            <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              type="search"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="Search repositories..."
+              className="pl-9"
+            />
+          </div>
         </div>
       </CardHeader>
 

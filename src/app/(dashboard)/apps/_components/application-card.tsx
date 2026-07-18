@@ -29,7 +29,7 @@ function ApplicationCard({ application }: { application: Application }) {
         href={`/apps/${id}`}
         className="group rounded-md outline-none"
       >
-        <Card className="gap-0 py-0 transition-shadow shadow-none ring-2 ring-border/50">
+        <Card className="gap-0 py-0">
 
           <CardHeader className="gap-3 pt-6">
             <span className="flex size-9 items-center justify-center rounded-full bg-muted text-muted-foreground">
