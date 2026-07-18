@@ -6,14 +6,7 @@ export default function Home() {
   return (
     <div>
        <div className="flex items-center justify-between">
-        <div>
-          <h1>Dashboard</h1>
-        </div>
-
-        <div>
-          <UserButton/>
-        </div>
-
+       
        </div>
     </div>
   );

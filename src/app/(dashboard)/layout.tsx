@@ -1,11 +1,14 @@
+import { Navbar } from "@/shared/components/navbar/navbar"
+
 export default function DashboardLayout({
     children,
 }: {
     children: React.ReactNode
 }) {
     return (
-        <section>
-            <main>{children}</main>
+        <section className="flex min-h-full flex-col">
+            <Navbar />
+            <main className="flex-1 px-4 py-6 sm:px-6">{children}</main>
         </section>
     )
 }
