@@ -1,7 +1,9 @@
 import { NewProjectNavbar } from "./_components/new-navbar"
 import { ImportProject } from "./_components/import-project"
+import { auth } from "@clerk/nextjs/server"
 
-export default function NewProjectPage() {
+export default async function NewProjectPage() {
+  await auth.protect()
   return (
     <div className="flex flex-1 flex-col">
       <NewProjectNavbar />

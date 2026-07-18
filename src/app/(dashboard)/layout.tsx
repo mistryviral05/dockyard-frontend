@@ -1,10 +1,12 @@
 import { Navbar } from "@/shared/components/navbar/navbar"
+import { auth } from "@clerk/nextjs/server"
 
-export default function DashboardLayout({
+export default async function DashboardLayout({
     children,
 }: {
     children: React.ReactNode
 }) {
+    await auth.protect()
     return (
         <section className="flex min-h-full flex-col">
             <Navbar />
