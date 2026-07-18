@@ -17,13 +17,13 @@ import { Badge } from "@/shared/components/myui/badge"
 import { NavTabs, type NavTabItem } from "@/shared/components/myui/nav-tabs"
 
 const tabs: NavTabItem[] = [
-  { label: "Applications", href: "/" },
+  { label: "Applications", href: "/apps" },
   { label: "Agents", href: "/agents" },
 ]
 
 function Navbar() {
   return (
-    <header className="w-full border-b border-border ">
+    <header className="w-full border-b border-border">
       {/* Top row: workspace switcher + actions */}
       <div className="flex h-14 items-center border-b border-border justify-between px-4 sm:px-6">
         <DropdownMenu >
