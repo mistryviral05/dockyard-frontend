@@ -4,12 +4,10 @@ import { AppWindow, TriangleAlert } from "lucide-react"
 import {
   Card,
   CardContent,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/shared/components/ui/card"
 import { Badge } from "@/shared/components/myui/badge"
-import { cn } from "@/shared/lib/utils"
 
 export type Application = {
   id: string
@@ -29,9 +27,9 @@ function ApplicationCard({ application }: { application: Application }) {
     <div className="flex flex-col gap-2">
       <Link
         href={`/apps/${id}`}
-        className="group rounded-md outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+        className="group rounded-md outline-none"
       >
-        <Card className="gap-0 py-0 transition-shadow group-hover:shadow-lg">
+        <Card className="gap-0 py-0 transition-shadow shadow-none ring-2 ring-border/50">
 
           <CardHeader className="gap-3 pt-6">
             <span className="flex size-9 items-center justify-center rounded-full bg-muted text-muted-foreground">
@@ -58,7 +56,7 @@ function ApplicationCard({ application }: { application: Application }) {
               )}
             </div>
           </CardContent>
-        
+
         </Card>
       </Link>
 

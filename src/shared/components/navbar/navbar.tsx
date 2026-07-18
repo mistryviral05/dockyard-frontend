@@ -23,7 +23,7 @@ const tabs: NavTabItem[] = [
 
 function Navbar() {
   return (
-    <header className="w-full border-b border-border">
+    <header className="w-full border-b border-border bg-gray-50">
       {/* Top row: workspace switcher + actions */}
       <div className="flex h-14 items-center border-b border-border justify-between px-4 sm:px-6">
         <DropdownMenu >
@@ -42,7 +42,7 @@ function Navbar() {
             <span className="font-semibold">Personal workspace</span>
             <ChevronsUpDown className="text-muted-foreground" />
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" alignOffset={50} className="min-w-56">
+          <DropdownMenuContent align="end" alignOffset={50} className="min-w-70">
             <DropdownMenuGroup >
 
               <DropdownMenuLabel>Workspaces</DropdownMenuLabel>
