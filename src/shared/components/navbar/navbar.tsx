@@ -42,7 +42,7 @@ function Navbar() {
             <span className="font-semibold">Personal workspace</span>
             <ChevronsUpDown className="text-muted-foreground" />
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" alignOffset={50} className="min-w-70">
+          <DropdownMenuContent align="end" alignOffset={50} className="min-w-80">
             <DropdownMenuGroup >
 
               <DropdownMenuLabel>Workspaces</DropdownMenuLabel>
