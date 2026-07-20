@@ -1,4 +1,5 @@
-import { Card } from "@/shared/components/ui/card"
+import { Bot } from "lucide-react"
+
 import {
   Table,
   TableBody,
@@ -34,23 +35,45 @@ const agents: Agent[] = [
 
 function AgentsTable() {
   return (
-    <Card className="py-0">
-      <Table>
+    <div className="rounded-2xl bg-gray-50 p-1.5 ">
+      <Table className="border-separate border-spacing-0">
         <TableHeader>
-          <TableRow>
-            <TableHead className="pl-6">Agent</TableHead>
-            <TableHead>ID</TableHead>
-            <TableHead className="pr-6">Run Command</TableHead>
+          <TableRow className="border-0 hover:bg-transparent">
+            <TableHead className="h-10 px-4 text-xs font-medium text-muted-foreground">
+              Agent
+            </TableHead>
+            <TableHead className="h-10 px-4 text-xs font-medium text-muted-foreground">
+              ID
+            </TableHead>
+            <TableHead className="h-10 px-4 text-xs font-medium text-muted-foreground">
+              Run Command
+            </TableHead>
           </TableRow>
         </TableHeader>
-        <TableBody>
+
+        <TableBody
+          className="[&_td]:border-b [&_td]:border-border [&_td]:bg-background
+            [&_tr:first-child_td]:border-t
+            [&_tr:first-child_td:first-child]:rounded-tl-xl
+            [&_tr:first-child_td:last-child]:rounded-tr-xl
+            [&_tr:last-child_td:first-child]:rounded-bl-xl
+            [&_tr:last-child_td:last-child]:rounded-br-xl
+            [&_tr_td:first-child]:border-l [&_tr_td:last-child]:border-r"
+        >
           {agents.map((agent) => (
-            <TableRow key={agent.id}>
-              <TableCell className="pl-6 font-medium">{agent.name}</TableCell>
-              <TableCell className="font-mono text-xs text-muted-foreground">
+            <TableRow key={agent.id} className="border-0 hover:bg-transparent">
+              <TableCell className="px-4 py-3">
+                <div className="flex items-center gap-3">
+                  <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-muted text-muted-foreground">
+                    <Bot className="size-4" />
+                  </span>
+                  <span className="font-medium">{agent.name}</span>
+                </div>
+              </TableCell>
+              <TableCell className="px-4 py-3 font-mono text-xs text-muted-foreground">
                 {agent.id}
               </TableCell>
-              <TableCell className="pr-6">
+              <TableCell className="px-4 py-3">
                 <code className="rounded-md bg-muted px-2 py-1 font-mono text-xs">
                   {agent.command}
                 </code>
@@ -59,7 +82,7 @@ function AgentsTable() {
           ))}
         </TableBody>
       </Table>
-    </Card>
+    </div>
   )
 }
 
