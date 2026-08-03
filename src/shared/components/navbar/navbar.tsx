@@ -56,7 +56,7 @@ function Navbar() {
         </DropdownMenu>
 
         <div className="flex items-center gap-3">
-          <UserButton />
+          <UserButton signInUrl="/sign-in" />
         </div>
       </div>
 

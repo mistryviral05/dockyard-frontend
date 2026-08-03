@@ -6,7 +6,7 @@ export default async function DashboardLayout({
 }: {
     children: React.ReactNode
 }) {
-    await auth.protect()
+    // await auth.protect()
     return (
         <section className="flex min-h-full flex-col">
             <Navbar />
