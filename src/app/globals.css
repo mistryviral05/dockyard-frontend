@@ -117,13 +117,26 @@
   --sidebar-ring: oklch(0.56 0.021 213.5);
 }
 
+
+@theme inline {
+  --shadow-card: 0px 5px 15px 0px rgb(0 0 0 / 0.08),
+    0px 15px 35px -5px rgb(0 0 0 / 0.20),
+    0px 0px 0px 1px rgb(0 0 0 / 0.07);
+
+  --shadow-dialog:   0px 5px 15px 0px rgb(0 0 0 / 0.08),
+    0px 15px 35px -5px rgb(0 0 0 / 0.20),
+    0px 0px 0px 1px rgb(0 0 0 / 0.07);
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+
   html {
     @apply font-sans;
   }
@@ -135,10 +148,12 @@
     stroke-dasharray: 1px, 200px;
     stroke-dashoffset: 0;
   }
+
   50% {
     stroke-dasharray: 100px, 200px;
     stroke-dashoffset: -15px;
   }
+
   100% {
     stroke-dasharray: 100px, 200px;
     stroke-dashoffset: -125px;
