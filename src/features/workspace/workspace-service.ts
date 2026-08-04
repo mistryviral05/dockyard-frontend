@@ -8,8 +8,11 @@ class WorkspaceService {
     private base = "/v1/workspaces"
 
     getWorkspaces() {
+    
+        
         return useApiStore.getState().requestGet<Workspace[]>(this.base)
     }
 }
+
 
 export const workspaceService = new WorkspaceService()

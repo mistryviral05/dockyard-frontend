@@ -3,18 +3,19 @@ import { useQuery } from "@tanstack/react-query"
 import { workspaceService } from "./workspace-service"
 
 
-export class WorkspaceQueries {
-    private isApiReady: boolean = false
-    constructor() {
-        this.isApiReady = useApiStore.getState().isApiReady
-    }
+class WorkspaceQueries {
+
 
     useGetWorkspaces() {
+
+        const isApiReady = useApiStore((state) => state.isApiReady);
         return useQuery({
             queryKey: ["workspaces"],
-            queryFn: workspaceService.getWorkspaces,
-            enabled: this.isApiReady,
+            queryFn: workspaceService.getWorkspaces.bind(workspaceService),
+            enabled: isApiReady,
         })
     }
 
 }
+
+export const workspaceQueries = new WorkspaceQueries()

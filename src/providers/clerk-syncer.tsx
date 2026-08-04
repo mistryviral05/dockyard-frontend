@@ -10,14 +10,16 @@ export default function ClerkZustandSyncer({
 }: {
     children: React.ReactNode
 }) {
-    const { getToken, isLoaded } = useAuth()
+    // console.log("Syncer rendered");
+    const { getToken, isLoaded,isSignedIn } = useAuth()
     const setClerkGetToken = useApiStore((state) => state.setClerkGetToken)
-
     useEffect(() => {
-        if (isLoaded) {
-            setClerkGetToken(getToken)
+        // console.log("Syncer useEffect called");
+        if (isLoaded && isSignedIn && getToken) {
+            // console.log("Syncer isLoaded and signed in, setting getToken in store");
+            setClerkGetToken(() => getToken())
         }
-    }, [getToken, isLoaded, setClerkGetToken])
+    }, [getToken, isLoaded, isSignedIn, setClerkGetToken])
 
     return <>{children}</>
 }

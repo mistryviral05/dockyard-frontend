@@ -29,7 +29,7 @@ export const useApiStore = create<ApiStore>((set, get) => ({
     requestGet: async <T,>(url: string, options: RequestOptions = {}) => {
         const { auth = true } = options;
         const token = auth ? await get().clerkGetToken?.() : null;
-
+        // console.log(token?.slice(-20));
         const response = await api.get<T>(url, {
             headers: token ? { Authorization: `Bearer ${token}` } : undefined
         })

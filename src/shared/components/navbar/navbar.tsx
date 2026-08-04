@@ -14,9 +14,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/shared/components/ui/dropdown-menu"
-import { Badge } from "@/shared/components/myui/badge"
 import { NavTabs, type NavTabItem } from "@/shared/components/myui/nav-tabs"
 import { CreateWorkspaceDialog } from "@/shared/components/navbar/create-workspace-dialog"
+import { workspaceQueries } from "@/features/workspace/useWorkspaceQueries"
 
 const tabs: NavTabItem[] = [
   { label: "Applications", href: "/apps" },
@@ -25,7 +25,10 @@ const tabs: NavTabItem[] = [
 
 function Navbar() {
   const [createWorkspaceOpen, setCreateWorkspaceOpen] = useState(false)
+  const { data: workspaces, isLoading } = workspaceQueries.useGetWorkspaces()
 
+  console.log("workspaces", workspaces, isLoading)
+  
   return (
     <header className="w-full border-b border-border bg-gray-50">
       {/* Top row: workspace switcher + actions */}
