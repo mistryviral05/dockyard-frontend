@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import { UserButton } from "@clerk/nextjs"
 import { ChevronsUpDown, PlusCircle } from "lucide-react"
 
@@ -15,6 +16,7 @@ import {
 } from "@/shared/components/ui/dropdown-menu"
 import { Badge } from "@/shared/components/myui/badge"
 import { NavTabs, type NavTabItem } from "@/shared/components/myui/nav-tabs"
+import { CreateWorkspaceDialog } from "@/shared/components/navbar/create-workspace-dialog"
 
 const tabs: NavTabItem[] = [
   { label: "Applications", href: "/apps" },
@@ -22,6 +24,8 @@ const tabs: NavTabItem[] = [
 ]
 
 function Navbar() {
+  const [createWorkspaceOpen, setCreateWorkspaceOpen] = useState(false)
+
   return (
     <header className="w-full border-b border-border bg-gray-50">
       {/* Top row: workspace switcher + actions */}
@@ -50,7 +54,10 @@ function Navbar() {
                 A
               </span>Personal workspace</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem><PlusCircle />Create workspace</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setCreateWorkspaceOpen(true)}>
+                <PlusCircle />
+                Create workspace
+              </DropdownMenuItem>
             </DropdownMenuGroup>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -64,6 +71,11 @@ function Navbar() {
       <div className="px-4 sm:px-6">
         <NavTabs items={tabs} />
       </div>
+
+      <CreateWorkspaceDialog
+        open={createWorkspaceOpen}
+        onOpenChange={setCreateWorkspaceOpen}
+      />
     </header>
   )
 }
