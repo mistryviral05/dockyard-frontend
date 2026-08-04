@@ -9,7 +9,8 @@ class WorkspaceService {
 
     private base = "/v1/workspaces"
 
-    getWorkspaces() {
+   async getWorkspaces() {
+        await new Promise((resolve) => setTimeout(resolve, 2000));
         return useApiStore.getState().requestGet<Workspace[]>(this.base)
     }
 
