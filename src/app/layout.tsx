@@ -5,6 +5,8 @@ import { cn } from "@/shared/lib/utils";
 import { ClerkProvider } from "@clerk/nextjs";
 import ClerkZustandSyncer from "@/providers/clerk-syncer";
 import QueryProvider from "@/providers/query-client-provider";
+import { SnackbarProvider } from 'notistack'
+import SnackBar from "@/providers/snack-bar";
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -39,12 +41,15 @@ export default function RootLayout({
       className={cn("h-full", "antialiased", geistSans.variable, geistMono.variable, manrope.variable, "font-sans", inter.variable)}
     >
       <body className="min-h-full flex flex-col">
+
         <ClerkProvider afterSignOutUrl={'/sign-in'}>
-          <QueryProvider>
-            <ClerkZustandSyncer>
-              {children}
-            </ClerkZustandSyncer>
-          </QueryProvider>
+          <SnackBar>
+            <QueryProvider>
+              <ClerkZustandSyncer>
+                {children}
+              </ClerkZustandSyncer>
+            </QueryProvider>
+          </SnackBar>
         </ClerkProvider>
       </body>
     </html>

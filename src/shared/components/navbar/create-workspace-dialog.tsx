@@ -21,8 +21,10 @@ import {
   slugify,
   type CreateWorkspaceValues,
 } from "./create-wsp-schema"
-import { Spinner } from "../myui/spinner"
 import { CircularSpinner } from "../myui/circular-spinner"
+import { workspaceQueries } from "@/features/workspace/useWorkspaceQueries"
+import { useSnackbar } from "notistack"
+import { useQueryClient } from "@tanstack/react-query"
 
 function CreateWorkspaceDialog({
   open,
@@ -31,9 +33,11 @@ function CreateWorkspaceDialog({
   open: boolean
   onOpenChange: (open: boolean) => void
 }) {
-  // Tracks whether the user has manually edited the slug. Once they have, we
-  // stop auto-generating it from the name.
+
   const [slugEdited, setSlugEdited] = useState(false)
+  const qc = useQueryClient()
+  const { enqueueSnackbar } = useSnackbar()
+  const { mutate: create, isPending } = workspaceQueries.useCreateWorkspace()
 
   const {
     register,
@@ -55,9 +59,23 @@ function CreateWorkspaceDialog({
   }
 
   const onSubmit = (values: CreateWorkspaceValues) => {
-    // No backend yet. The created workspace is just logged for now.
-    console.log("Create workspace", values)
-    handleOpenChange(false)
+    create(values, {
+      onSuccess: () => {
+        enqueueSnackbar(`Workspace "${values.name}" created successfully!`, {
+          variant: 'success',
+          autoHideDuration: 3000,
+
+        })
+        qc.invalidateQueries({ queryKey: ['workspaces'] })
+        handleOpenChange(false)
+      },
+      onError: (err) => {
+        enqueueSnackbar(`Failed to create workspace`, {
+          variant: 'error',
+          autoHideDuration: 3000,
+        })
+      }
+    })
   }
 
   return (
@@ -120,9 +138,14 @@ function CreateWorkspaceDialog({
             >
               Cancel
             </DialogClose>
-            <Button type="submit" disabled={true}>
-              Create workspace
-              {/* <CircularSpinner size={'xs'}/> Creating... */}
+            <Button type="submit" disabled={isPending}>
+              {
+                isPending ? <>
+                  <CircularSpinner size={'xs'} /> Creating...
+
+                </> : "Create workspace"
+              }
+
             </Button>
           </DialogFooter>
         </form>
