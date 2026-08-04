@@ -3,6 +3,8 @@ import { Geist, Geist_Mono, Inter, Manrope } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/shared/lib/utils";
 import { ClerkProvider } from "@clerk/nextjs";
+import ClerkZustandSyncer from "@/providers/clerk-syncer";
+import QueryProvider from "@/providers/query-client-provider";
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -38,8 +40,11 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <ClerkProvider afterSignOutUrl={'/sign-in'}>
-
-          {children}
+          <QueryProvider>
+            <ClerkZustandSyncer>
+              {children}
+            </ClerkZustandSyncer>
+          </QueryProvider>
         </ClerkProvider>
       </body>
     </html>
