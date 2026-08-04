@@ -40,7 +40,7 @@ function CreateWorkspaceDialog({
     handleSubmit,
     setValue,
     reset,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<CreateWorkspaceValues>({
     resolver: zodResolver(createWorkspaceSchema),
     defaultValues: { name: "", slug: "" },
@@ -55,7 +55,7 @@ function CreateWorkspaceDialog({
   }
 
   const onSubmit = (values: CreateWorkspaceValues) => {
-    // No backend yet — the created workspace is just logged for now.
+    // No backend yet. The created workspace is just logged for now.
     console.log("Create workspace", values)
     handleOpenChange(false)
   }
@@ -121,9 +121,8 @@ function CreateWorkspaceDialog({
               Cancel
             </DialogClose>
             <Button type="submit" disabled={true}>
-              {/* Create workspace */}
-              {/* <Spinner /> Creating... */}
-              <CircularSpinner size={'xs'}/> Creating...
+              Create workspace
+              {/* <CircularSpinner size={'xs'}/> Creating... */}
             </Button>
           </DialogFooter>
         </form>

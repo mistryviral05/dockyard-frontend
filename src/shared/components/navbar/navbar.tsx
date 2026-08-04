@@ -27,8 +27,8 @@ function Navbar() {
   const [createWorkspaceOpen, setCreateWorkspaceOpen] = useState(false)
   const { data: workspaces, isLoading } = workspaceQueries.useGetWorkspaces()
 
-  console.log("workspaces", workspaces, isLoading)
-  
+
+
   return (
     <header className="w-full border-b border-border bg-gray-50">
       {/* Top row: workspace switcher + actions */}
@@ -53,9 +53,16 @@ function Navbar() {
             <DropdownMenuGroup >
 
               <DropdownMenuLabel>Workspaces</DropdownMenuLabel>
-              <DropdownMenuItem>   <span className="flex size-6 items-center justify-center rounded-full bg-primary text-sm font-semibold text-primary-foreground">
-                A
-              </span>Personal workspace</DropdownMenuItem>
+              {
+                workspaces?.map((workspace) => (
+
+
+                  <DropdownMenuItem key={workspace.id}>   <span className="flex size-6 items-center justify-center rounded-full bg-primary  text-sm font-semibold text-primary-foreground">
+                    {workspace.wsp_name.charAt(0)}
+                  </span>{workspace.wsp_name}</DropdownMenuItem>
+
+                ))
+              }
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={() => setCreateWorkspaceOpen(true)}>
                 <PlusCircle />
