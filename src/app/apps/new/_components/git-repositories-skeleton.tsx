@@ -5,6 +5,30 @@ import {
 } from "@/shared/components/ui/card"
 import { Skeleton } from "@/shared/components/ui/skeleton"
 
+
+function ReposSkeleton() {
+  return (
+    <ul className="divide-y divide-border border-t border-border">
+      {Array.from({ length: 5 }).map((_, index) => (
+        <li
+          key={index}
+          className="flex items-center justify-between gap-3 px-6 py-3"
+        >
+          <div className="flex items-center gap-3">
+            <Skeleton className="size-8 rounded-full" />
+            <div className="space-y-2">
+              <Skeleton className="h-4 w-28" />
+              <Skeleton className="h-3 w-20" />
+            </div>
+          </div>
+          <Skeleton className="h-8 w-16" />
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+
 function GitRepositoriesSkeleton() {
   return (
     <Card className="w-full max-w-xl">
@@ -17,26 +41,10 @@ function GitRepositoriesSkeleton() {
       </CardHeader>
 
       <CardContent className="px-0">
-        <ul className="divide-y divide-border border-t border-border">
-          {Array.from({ length: 5 }).map((_, index) => (
-            <li
-              key={index}
-              className="flex items-center justify-between gap-3 px-6 py-3"
-            >
-              <div className="flex items-center gap-3">
-                <Skeleton className="size-8 rounded-full" />
-                <div className="space-y-2">
-                  <Skeleton className="h-4 w-28" />
-                  <Skeleton className="h-3 w-20" />
-                </div>
-              </div>
-              <Skeleton className="h-8 w-16" />
-            </li>
-          ))}
-        </ul>
+        <ReposSkeleton />
       </CardContent>
     </Card>
   )
 }
 
-export { GitRepositoriesSkeleton }
+export { GitRepositoriesSkeleton, ReposSkeleton }

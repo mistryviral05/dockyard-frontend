@@ -33,11 +33,11 @@ class GithubQueries {
         })
     }
 
-    useGetRepositories(installationId: string) {
+    useGetRepositories(installationId?: string) {
         const isApiReady = useApiStore(state => state.isApiReady)
         return useQuery({
             queryKey: ["github-repositories", installationId],
-            queryFn: () => githubService.getRepositories.bind(githubService)(installationId),
+            queryFn: () => githubService.getRepositories.bind(githubService)(installationId || ""),
             enabled: isApiReady && !!installationId,
             select: (data: GeneralData<GithubRepository[]>) => data?.data || [],
         })

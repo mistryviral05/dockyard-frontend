@@ -17,4 +17,5 @@ export type GithubRepository = {
     repo_full_name: string
     repo_url: string
     is_private: boolean
+    last_updated_at: string
 }
