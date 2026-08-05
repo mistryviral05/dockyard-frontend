@@ -12,6 +12,14 @@ class GithubQueries {
         })
     }
 
+    useInstallGithubApp() {
+       
+        return useMutation({
+            mutationFn: ({ installationId, state }: { installationId: string, state: string }) => githubService.installGithubApp.bind(githubService)(installationId, state),
+
+        })
+    }
+
 
 }
 
