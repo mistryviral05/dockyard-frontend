@@ -1,6 +1,6 @@
 import { GeneralData, GeneralMessage } from "@/shared/types/responses"
 import { useApiStore } from "@/store/useApiStore"
-import { GithubLinkUrl } from "./types"
+import { GithubInstallation, GithubLinkUrl } from "./types"
 
 
 
@@ -18,6 +18,10 @@ class GithubService {
             installation_id: installationId,
             state: state
         })
+    }
+
+    getInstallations() {
+        return useApiStore.getState().requestGet<GeneralData<GithubInstallation[]>>(this.base + "/installations")
     }
 }
 
