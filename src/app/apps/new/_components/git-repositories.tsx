@@ -13,6 +13,7 @@ import {
 import { Input } from "@/shared/components/ui/input"
 
 import { AccountSwitcher } from "./account-switcher"
+import { GithubInstallation } from "@/features/github/types"
 
 type Repository = {
   id: string
@@ -29,7 +30,7 @@ const repositories: Repository[] = [
   { id: "5", name: "design-system", updatedLabel: "Updated 2w ago", isPrivate: false },
 ]
 
-function GitRepositories() {
+function GitRepositories({ installations }: { installations: GithubInstallation[] }) {
   const [query, setQuery] = useState("")
 
   const filtered = repositories.filter((repo) =>
@@ -42,7 +43,7 @@ function GitRepositories() {
         <CardTitle className="text-lg">Import Git Repository</CardTitle>
         <div className="mt-3 flex flex-col gap-2 sm:flex-row">
           <div className="sm:w-52">
-            <AccountSwitcher />
+            <AccountSwitcher  installations={installations}/>
           </div>
           <div className="relative flex-1">
             <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
