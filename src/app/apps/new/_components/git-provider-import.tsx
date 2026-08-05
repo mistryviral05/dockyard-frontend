@@ -7,7 +7,7 @@ import { CircularSpinner } from "@/shared/components/myui/circular-spinner"
 import { githubQueries } from "@/features/github/useGithubQueries"
 import { useState } from "react"
 
-function GitProviderImport({ }: { onContinue?: () => void }) {
+function GitProviderImport() {
   const { mutate: install, isPending } = githubQueries.useGetGithubInstallUrl()
   const [redirecting, setRedirecting] = useState(false)
   function handleContinue() {

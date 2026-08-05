@@ -19,7 +19,7 @@ const accounts = ["mistryviral05", "viral-mistry"]
 
 function AccountSwitcher() {
   const [account, setAccount] = useState(accounts[0])
-
+  
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="flex h-9 w-full items-center gap-2 rounded-3xl border border-border bg-background ring-1 ring-border/50  px-3 text-sm outline-none transition-colors hover:bg-muted/40 cursor-pointer">
@@ -29,14 +29,14 @@ function AccountSwitcher() {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="start" className="min-w-70">
-        <DropdownMenuRadioGroup value={account} onValueChange={setAccount}>
-          {accounts.map((item) => (
-            <DropdownMenuRadioItem key={item} value={item} className="pl-3">
-              <GithubIcon className="size-4" />
-              {item}
-            </DropdownMenuRadioItem>
-          ))}
-        </DropdownMenuRadioGroup>
+
+        {accounts.map((item) => (
+          <DropdownMenuItem key={item} className="pl-3">
+            <GithubIcon className="size-4" />
+            {item}
+          </DropdownMenuItem>
+        ))}
+
 
         <DropdownMenuSeparator />
 

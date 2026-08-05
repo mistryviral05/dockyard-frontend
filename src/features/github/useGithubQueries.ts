@@ -1,6 +1,8 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { githubService } from "./github-service";
 import { useApiStore } from "@/store/useApiStore";
+import { GeneralData } from "@/shared/types/responses";
+import { GithubInstallation } from "./types";
 
 
 
@@ -26,7 +28,8 @@ class GithubQueries {
         return useQuery({
             queryKey: ["github-installations"],
             queryFn: githubService.getInstallations.bind(githubService),
-            enabled: isApiReady
+            enabled: isApiReady,
+            select: (data: GeneralData<GithubInstallation[]>) => data?.data || [],
         })
     }
 
