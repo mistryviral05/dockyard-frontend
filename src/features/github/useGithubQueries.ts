@@ -2,7 +2,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { githubService } from "./github-service";
 import { useApiStore } from "@/store/useApiStore";
 import { GeneralData } from "@/shared/types/responses";
-import { GithubInstallation } from "./types";
+import { GithubInstallation, GithubRepository } from "./types";
 
 
 
@@ -30,6 +30,16 @@ class GithubQueries {
             queryFn: githubService.getInstallations.bind(githubService),
             enabled: isApiReady,
             select: (data: GeneralData<GithubInstallation[]>) => data?.data || [],
+        })
+    }
+
+    useGetRepositories(installationId: string) {
+        const isApiReady = useApiStore(state => state.isApiReady)
+        return useQuery({
+            queryKey: ["github-repositories", installationId],
+            queryFn: () => githubService.getRepositories.bind(githubService)(installationId),
+            enabled: isApiReady && !!installationId,
+            select: (data: GeneralData<GithubRepository[]>) => data?.data || [],
         })
     }
 

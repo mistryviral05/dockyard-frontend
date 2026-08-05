@@ -43,7 +43,7 @@ function GitRepositories({ installations }: { installations: GithubInstallation[
         <CardTitle className="text-lg">Import Git Repository</CardTitle>
         <div className="mt-3 flex flex-col gap-2 sm:flex-row">
           <div className="sm:w-52">
-            <AccountSwitcher  installations={installations}/>
+            <AccountSwitcher installations={installations} />
           </div>
           <div className="relative flex-1">
             <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
