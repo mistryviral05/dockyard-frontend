@@ -14,12 +14,28 @@ import {
 import { GithubIcon } from "./github-icon"
 import { GithubInstallation } from "@/features/github/types"
 import { useGithubAccStore } from "@/store/useGithubInstallation"
+import { githubQueries } from "@/features/github/useGithubQueries"
+import { CircularSpinner } from "@/shared/components/myui/circular-spinner"
 
 
 function AccountSwitcher({ installations }: { installations: GithubInstallation[] }) {
 
 
   const { activeAccLogin, initialize, setActiveAccLogin } = useGithubAccStore()
+
+  const { mutate: install, isPending } = githubQueries.useGetGithubInstallUrl()
+  const [redirecting, setRedirecting] = useState(false)
+  function handleContinue() {
+    install(undefined, {
+      onSuccess: ({ data }) => {
+        setRedirecting(true)
+        window.location.href = data.link
+      },
+      onError: (err) => {
+        setRedirecting(false)
+      }
+    })
+  }
 
   useEffect(() => {
     if (!installations || !installations.length) return
@@ -53,8 +69,8 @@ function AccountSwitcher({ installations }: { installations: GithubInstallation[
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem>
-          <Plus />
+        <DropdownMenuItem onClick={handleContinue} disabled={redirecting || isPending}>
+          {(isPending || redirecting) ? <CircularSpinner size={'xs'} /> : <Plus />}
           Add GitHub Account
         </DropdownMenuItem>
       </DropdownMenuContent>

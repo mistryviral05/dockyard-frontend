@@ -8,8 +8,8 @@ import { Skeleton } from "@/shared/components/ui/skeleton"
 
 function ReposSkeleton() {
   return (
-    <ul className="divide-y divide-border border-t border-border">
-      {Array.from({ length: 5 }).map((_, index) => (
+    <ul className="divide-y divide-border border-t border-border max-h-100">
+      {Array.from({ length: 7 }).map((_, index) => (
         <li
           key={index}
           className="flex items-center justify-between gap-3 px-6 py-3"
