@@ -13,10 +13,11 @@ import {
 import { Input } from "@/shared/components/ui/input"
 import { format } from 'date-fns'
 import { AccountSwitcher } from "./account-switcher"
-import { GithubInstallation } from "@/features/github/types"
+import { GithubInstallation, GithubRepository } from "@/features/github/types"
 import { githubQueries } from "@/features/github/useGithubQueries"
 import { useGithubAccStore } from "@/store/useGithubInstallation"
 import { ReposSkeleton } from "./git-repositories-skeleton"
+import { useRouter, useSearchParams } from "next/navigation"
 
 
 
@@ -26,12 +27,24 @@ function GitRepositories({ installations }: { installations: GithubInstallation[
   const [query, setQuery] = useState("")
   const activeAccLogin = useGithubAccStore((state) => state.activeAccLogin)
   const { data: repositories, isLoading } = githubQueries.useGetRepositories(activeAccLogin?.id)
-
-
+  const searchParams = useSearchParams()
+  const router = useRouter()
 
   const filtered = repositories?.filter((repo) =>
     repo.repo_name.toLowerCase().includes(query.trim().toLowerCase())
   )
+
+
+  function handleImport(repoMeta: GithubRepository) {
+    const params = new URLSearchParams(searchParams.toString())
+    params.set("github_repo_id", repoMeta.repo_id.toString())
+    params.set("repo_name", repoMeta.repo_name)
+    params.set("repo_full_name", repoMeta.repo_full_name)
+    params.set("repo_url", repoMeta.repo_url)
+    params.set("repo_owner", activeAccLogin?.account_login || "")
+    params.set("is_private", repoMeta.is_private.toString())
+    router.push(`/apps/new/import?${params.toString()}`)
+  }
 
   return (
     <Card className="w-full max-w-xl">
@@ -80,7 +93,9 @@ function GitRepositories({ installations }: { installations: GithubInstallation[
                     </div>
                   </div>
 
-                  <Button size="sm">Import</Button>
+                  <Button size="sm" onClick={() => handleImport(repo)}>
+                    Import
+                  </Button>
                 </li>
               ))}
 
