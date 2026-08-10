@@ -1,5 +1,6 @@
 // stores/workspace-store.ts
 import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
 
 export type ActiveWorkspace = {
   id: string;
@@ -9,52 +10,55 @@ export type ActiveWorkspace = {
 
 type WorkspaceStore = {
   activeWorkspace: ActiveWorkspace | null;
-
+  hasHydrated: boolean;
   setWorkspace: (workspace: ActiveWorkspace) => void;
-
-  initialize: (
-    workspaces: ActiveWorkspace[]
-  ) => void;
+  initialize: (workspaces: ActiveWorkspace[]) => void;
+  setHasHydrated: (state: boolean) => void;
 };
 
-export const useWorkspaceStore = create<WorkspaceStore>((set) => ({
-  activeWorkspace: null,
+export const useWorkspaceStore = create<WorkspaceStore>()(
+  persist(
+    (set, get) => ({
+      activeWorkspace: null,
+      hasHydrated: false,
 
-  setWorkspace: (workspace) => {
-    localStorage.setItem("active-workspace", JSON.stringify(workspace));
+      setWorkspace: (workspace) => {
+        set({ activeWorkspace: workspace });
+      },
 
-    set({
-      activeWorkspace: workspace,
-    });
-  },
+      initialize: (workspaces) => {
+        if (!workspaces.length) return;
 
-  initialize: (workspaces) => {
-    if (!workspaces.length) return;
+        const current = get().activeWorkspace;
 
-    const stored = localStorage.getItem("active-workspace");
 
-    if (stored) {
-      const parsed = JSON.parse(stored);
+        if (current) {
+          const exists = workspaces.find((w) => w.id === current.id);
+          if (exists) {
+            set({ activeWorkspace: exists });
+            return;
+          }
+        }
 
-      const exists = workspaces.find((w) => w.id === parsed.id);
+        const personal =
+          workspaces.find((w) => w.slug === "personal-workspace") ??
+          workspaces[0];
 
-      if (exists) {
-        set({ activeWorkspace: exists });
-        return;
-      }
+        set({ activeWorkspace: personal });
+      },
+
+      setHasHydrated: (state) => {
+        set({ hasHydrated: state });
+      },
+    }),
+    {
+      name: "active-workspace",
+      storage: createJSONStorage(() => localStorage),
+      skipHydration: true,
+      partialize: (state) => ({ activeWorkspace: state.activeWorkspace }),
+      onRehydrateStorage: () => (state) => {
+        state?.setHasHydrated(true);
+      },
     }
-
-    const personal =
-      workspaces.find((w) => w.slug === "personal-workspace") ??
-      workspaces[0];
-
-    localStorage.setItem(
-      "active-workspace",
-      JSON.stringify(personal)
-    );
-
-    set({
-      activeWorkspace: personal,
-    });
-  },
-}));
+  )
+);

@@ -21,6 +21,11 @@ export default function ImportPage() {
     const repoName = searchParams.get("repo_name")
     const [environmentVariablesOpen, setEnvironmentVariablesOpen] = useState(true)
     const [environmentVariables, setEnvironmentVariables] = useState([{ key: '', value: '' }])
+    const { activeWorkspace, hasHydrated } = useWorkspaceStore()
+
+    if(hasHydrated) {
+        console.log("Active Workspace:", activeWorkspace)
+    }
 
     const addEnvironmentVariable = () => {
         setEnvironmentVariables((variables) => [...variables, { key: '', value: '' }])
@@ -147,7 +152,7 @@ export default function ImportPage() {
                                                         y: 0,
                                                         transition: { duration: 0.22, ease: 'easeOut' },
                                                     }}
-                                                    className="grid gap-3 sm:grid-cols-2"
+                                                    className="flex flex-col gap-2 border-b pb-2 "
                                                 >
                                                     <Input
                                                         aria-label={`Environment variable ${index + 1} key`}
