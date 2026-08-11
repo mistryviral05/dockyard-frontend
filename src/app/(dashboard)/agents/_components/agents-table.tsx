@@ -8,45 +8,56 @@ import {
   TableHeader,
   TableRow,
 } from "@/shared/components/ui/table"
+import type { Agent } from "@/features/agent/types"
+import { AgentStatusBadge } from "./agent-status-badge"
+import { AgentsEmptyState } from "./agents-empty-state"
 
-export type Agent = {
-  id: string
-  name: string
-  command: string
-}
-
+// TODO: replace with GET /v1/agents once the feature layer exists.
 const agents: Agent[] = [
   {
-    id: "agt_8f2k91",
+    id: "agent_tz4k91xw0q8n2mv7bd3ls6yh",
     name: "Build Agent",
-    command: "dockyard run build-agent",
+    status: "pending",
+    subdomain: null,
+    port: "8999",
   },
   {
-    id: "agt_2c7m04",
+    id: "agent_9m2xq7pv4hd1sc8kt5nr3wbz",
     name: "Deploy Agent",
-    command: "dockyard run deploy-agent",
-  },
-  {
-    id: "agt_5t1p66",
-    name: "Log Collector",
-    command: "dockyard run log-collector",
+    status: "active",
+    subdomain: "deploy-agent.viralmistry.dev",
+    port: "8999",
   },
 ]
 
 function AgentsTable() {
+  if (agents.length === 0) {
+    return (
+      <div className="rounded-2xl bg-muted p-1.5">
+        <AgentsEmptyState />
+      </div>
+    )
+  }
+
   return (
-    <div className="rounded-2xl bg-gray-50 p-1.5 ">
+    <div className="rounded-2xl bg-muted p-1.5">
       <Table className="border-separate border-spacing-0">
         <TableHeader>
           <TableRow className="border-0 hover:bg-transparent">
+            <TableHead className="h-10 w-12 px-4 text-xs font-medium text-muted-foreground">
+              #
+            </TableHead>
             <TableHead className="h-10 px-4 text-xs font-medium text-muted-foreground">
               Agent
             </TableHead>
             <TableHead className="h-10 px-4 text-xs font-medium text-muted-foreground">
-              ID
+              Status
             </TableHead>
             <TableHead className="h-10 px-4 text-xs font-medium text-muted-foreground">
-              Run Command
+              Subdomain
+            </TableHead>
+            <TableHead className="h-10 px-4 text-xs font-medium text-muted-foreground">
+              Port
             </TableHead>
           </TableRow>
         </TableHeader>
@@ -60,8 +71,11 @@ function AgentsTable() {
             [&_tr:last-child_td:last-child]:rounded-br-xl
             [&_tr_td:first-child]:border-l [&_tr_td:last-child]:border-r"
         >
-          {agents.map((agent) => (
+          {agents.map((agent, index) => (
             <TableRow key={agent.id} className="border-0 hover:bg-transparent">
+              <TableCell className="px-4 py-3 text-xs tabular-nums text-muted-foreground">
+                {index + 1}
+              </TableCell>
               <TableCell className="px-4 py-3">
                 <div className="flex items-center gap-3">
                   <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-muted text-muted-foreground">
@@ -70,13 +84,16 @@ function AgentsTable() {
                   <span className="font-medium">{agent.name}</span>
                 </div>
               </TableCell>
-              <TableCell className="px-4 py-3 font-mono text-xs text-muted-foreground">
-                {agent.id}
-              </TableCell>
               <TableCell className="px-4 py-3">
-                <code className="rounded-md bg-muted px-2 py-1 font-mono text-xs">
-                  {agent.command}
-                </code>
+                <AgentStatusBadge status={agent.status} />
+              </TableCell>
+              <TableCell className="px-4 py-3 font-mono text-xs">
+                {agent.subdomain ?? (
+                  <span className="text-muted-foreground">—</span>
+                )}
+              </TableCell>
+              <TableCell className="px-4 py-3 font-mono text-xs text-muted-foreground">
+                {agent.port}
               </TableCell>
             </TableRow>
           ))}
