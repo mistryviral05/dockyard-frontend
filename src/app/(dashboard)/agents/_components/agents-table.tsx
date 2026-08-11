@@ -1,3 +1,5 @@
+"use client"
+
 import { Bot } from "lucide-react"
 
 import {
@@ -8,30 +10,33 @@ import {
   TableHeader,
   TableRow,
 } from "@/shared/components/ui/table"
-import type { Agent } from "@/features/agent/types"
+import { agentQueries } from "@/features/agent/useAgentQueries"
 import { AgentStatusBadge } from "./agent-status-badge"
 import { AgentsEmptyState } from "./agents-empty-state"
-
-// TODO: replace with GET /v1/agents once the feature layer exists.
-const agents: Agent[] = [
-  {
-    id: "agent_tz4k91xw0q8n2mv7bd3ls6yh",
-    name: "Build Agent",
-    status: "pending",
-    subdomain: null,
-    port: "8999",
-  },
-  {
-    id: "agent_9m2xq7pv4hd1sc8kt5nr3wbz",
-    name: "Deploy Agent",
-    status: "active",
-    subdomain: "deploy-agent.viralmistry.dev",
-    port: "8999",
-  },
-]
+import { AgentsTableSkeleton } from "./agents-table-skeleton"
 
 function AgentsTable() {
-  if (agents.length === 0) {
+  const { data: agents, isLoading, isError } = agentQueries.useGetAgents()
+
+  if (isLoading) {
+    return (
+      <div className="rounded-2xl bg-muted p-1.5">
+        <AgentsTableSkeleton />
+      </div>
+    )
+  }
+
+  if (isError) {
+    return (
+      <div className="rounded-2xl bg-muted p-1.5">
+        <div className="rounded-xl border border-border bg-background px-6 py-16 text-center text-sm text-muted-foreground">
+          Could not load your agents. Please try again.
+        </div>
+      </div>
+    )
+  }
+
+  if (!agents || agents.length === 0) {
     return (
       <div className="rounded-2xl bg-muted p-1.5">
         <AgentsEmptyState />

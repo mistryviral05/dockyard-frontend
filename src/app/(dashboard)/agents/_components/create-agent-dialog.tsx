@@ -3,6 +3,9 @@
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useQueryClient } from "@tanstack/react-query"
+import { useSnackbar } from "notistack"
+import { isAxiosError } from "axios"
 import { TriangleAlert } from "lucide-react"
 
 import { Button } from "@/shared/components/ui/button"
@@ -24,28 +27,9 @@ import {
   type CreateAgentValues,
 } from "@/features/agent/schema"
 import type { CreatedAgent } from "@/features/agent/types"
+import { agentQueries } from "@/features/agent/useAgentQueries"
+import { CircularSpinner } from "@/shared/components/myui/circular-spinner"
 import { AgentRunCommand } from "./agent-run-command"
-
-/**
- * Stand-in for the POST /v1/agents response so the install step can be built
- * before the feature layer exists. Replace with the real mutation result.
- */
-function buildPlaceholderAgent(values: CreateAgentPayload): CreatedAgent {
-  const now = Date.now()
-  const token = "agt_9Kx2Lm4vQpR7sT1uW3yZ5aB8cD0eF6gH2jK4nP6qS8u"
-
-  return {
-    id: "agent_tz4k91xw0q8n2mv7bd3ls6yh",
-    name: values.name,
-    status: "pending",
-    port: values.port,
-    created_at: new Date(now).toISOString(),
-    token,
-    token_expires_at: new Date(now + 900 * 1000).toISOString(),
-    token_expires_in: 900,
-    run_command: `curl -fsSL http://localhost:8080/api/v1/agents/install.sh | bash -s -- --token ${token} --server http://localhost:8080 --port ${values.port}`,
-  }
-}
 
 function CreateAgentDialog({
   open,
@@ -56,11 +40,15 @@ function CreateAgentDialog({
 }) {
   // Set once the agent is created — swaps the dialog to the install step.
   const [created, setCreated] = useState<CreatedAgent | null>(null)
+  const qc = useQueryClient()
+  const { enqueueSnackbar } = useSnackbar()
+  const { mutate: create, isPending } = agentQueries.useCreateAgent()
 
   const {
     register,
     handleSubmit,
     reset,
+    setError,
     formState: { errors },
   } = useForm<CreateAgentValues, unknown, CreateAgentPayload>({
     resolver: zodResolver(createAgentSchema),
@@ -76,10 +64,25 @@ function CreateAgentDialog({
   }
 
   const onSubmit = (values: CreateAgentPayload) => {
-    // TODO: wire up POST /v1/agents once the feature layer exists — the
-    // response replaces this placeholder and feeds the install step below.
-    console.log(values)
-    setCreated(buildPlaceholderAgent(values))
+    create(values, {
+      onSuccess: (response) => {
+        qc.invalidateQueries({ queryKey: ["agents"] })
+        setCreated(response.data)
+      },
+      onError: (err) => {
+        // The API answers 409 when the name is already taken.
+        if (isAxiosError(err) && err.response?.status === 409) {
+          setError("name", {
+            message: "An agent with this name already exists",
+          })
+          return
+        }
+        enqueueSnackbar("Failed to create agent", {
+          variant: "error",
+          autoHideDuration: 3000,
+        })
+      },
+    })
   }
 
   if (created) {
@@ -169,7 +172,15 @@ function CreateAgentDialog({
             <DialogClose render={<Button type="button" variant="outline" />}>
               Cancel
             </DialogClose>
-            <Button type="submit">Create agent</Button>
+            <Button type="submit" disabled={isPending}>
+              {isPending ? (
+                <>
+                  <CircularSpinner size={"xs"} /> Creating...
+                </>
+              ) : (
+                "Create agent"
+              )}
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>
