@@ -35,8 +35,6 @@ function DeploymentDetailPage() {
     isFetchingNextPage,
   } = deploymentQueries.useGetDeploymentLogs(deploymentId)
 
-  // The whole history has to be on screen before the channel opens, or the
-  // lines published in between never reach the box.
   const isHistoryComplete = !isLoadingLogs && !hasNextPage
 
   useEffect(() => {
@@ -47,7 +45,13 @@ function DeploymentDetailPage() {
     fetchNextPage()
   }, [hasNextPage, isFetchingNextPage, fetchNextPage])
 
-  const channel = useDeploymentChannel(deploymentId, isHistoryComplete)
+  // A deployment that already settled publishes nothing, so no socket for it.
+  const canGoLive = deployment ? !isTerminalStatus(deployment.status) : false
+  const channel = useDeploymentChannel(
+    deploymentId,
+    canGoLive,
+    isHistoryComplete
+  )
 
   // The channel is ahead of the fetched row once a status event lands.
   const status = channel.status ?? deployment?.status

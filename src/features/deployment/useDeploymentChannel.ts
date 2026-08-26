@@ -18,6 +18,9 @@ type ChannelState = {
     isConnected: boolean
 }
 
+/** The namespace centrifugo publishes on, the channel is `deploy:{deployment_id}`. */
+const DEPLOYMENT_CHANNEL_PREFIX = "deploy"
+
 const initialState: ChannelState = {
     lines: [],
     status: null,
@@ -26,16 +29,24 @@ const initialState: ChannelState = {
 }
 
 /**
- * Listens on `deployment:{id}`.
- * Subscribe only once the history is on screen, otherwise the lines that land
- * between the first page and the subscription are lost.
+ * Listens on `deploy:{id}`.
+ *
+ * The socket opens right away, before the history request is done, otherwise the
+ * lines published in between are lost. Anything that lands early waits in a
+ * buffer until `isHistoryReady`, so live lines never jump ahead of the history.
  */
-export function useDeploymentChannel(deploymentId?: string, enabled: boolean = false) {
+export function useDeploymentChannel(
+    deploymentId?: string,
+    enabled: boolean = false,
+    isHistoryReady: boolean = false
+) {
     const isApiReady = useApiStore((state) => state.isApiReady)
     const [state, setState] = useState<ChannelState>(initialState)
     const [channelId, setChannelId] = useState(deploymentId)
     // Centrifugo replays its history after a reconnect, so seq keeps duplicates out.
     const seenSeq = useRef<Set<number>>(new Set())
+    const buffer = useRef<LogLine[]>([])
+    const hasHistory = useRef(isHistoryReady)
 
     // Another deployment means another channel, so drop what the last one collected.
     if (channelId !== deploymentId) {
@@ -51,7 +62,7 @@ export function useDeploymentChannel(deploymentId?: string, enabled: boolean = f
         let isCancelled = false
         let client: Centrifuge | null = null
         let subscription: Subscription | null = null
-        const channel = `deployment:${deploymentId}`
+        const channel = `${DEPLOYMENT_CHANNEL_PREFIX}:${deploymentId}`
         seenSeq.current = new Set()
 
         const handleEvent = (event: DeployEvent) => {
@@ -70,6 +81,12 @@ export function useDeploymentChannel(deploymentId?: string, enabled: boolean = f
 
             seenSeq.current.add(event.seq)
             const incoming = toLogLines(event)
+
+            if (!hasHistory.current) {
+                buffer.current.push(...incoming)
+                return
+            }
+
             setState((current) => ({ ...current, lines: [...current.lines, ...incoming] }))
         }
 
@@ -91,8 +108,15 @@ export function useDeploymentChannel(deploymentId?: string, enabled: boolean = f
                 subscription.on("unsubscribed", () => {
                     setState((current) => ({ ...current, isConnected: false }))
                 })
+                // A refused subscribe means the ownership check said no, and it is
+                // silent otherwise, so it would look like a build with no output.
+                subscription.on("error", (context) => {
+                    console.warn(`centrifugo could not subscribe to ${channel}`, context)
+                })
 
-                if (subscription.state !== "subscribed") {
+                if (subscription.state === "subscribed") {
+                    setState((current) => ({ ...current, isConnected: true }))
+                } else {
                     subscription.subscribe()
                 }
             })
@@ -112,6 +136,23 @@ export function useDeploymentChannel(deploymentId?: string, enabled: boolean = f
             }
         }
     }, [deploymentId, enabled, isApiReady])
+
+    // Once the history is rendered, whatever came in early can go under it.
+    useEffect(() => {
+        hasHistory.current = isHistoryReady
+
+        if (!isHistoryReady || buffer.current.length === 0) {
+            return
+        }
+
+        const pending = buffer.current
+        buffer.current = []
+        const timer = setTimeout(() => {
+            setState((current) => ({ ...current, lines: [...current.lines, ...pending] }))
+        }, 0)
+
+        return () => clearTimeout(timer)
+    }, [isHistoryReady])
 
     return state
 }
