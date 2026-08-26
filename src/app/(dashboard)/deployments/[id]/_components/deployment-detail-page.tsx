@@ -1,10 +1,12 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useMemo } from "react"
 import { useParams } from "next/navigation"
 import { useQueryClient } from "@tanstack/react-query"
 
 import { deploymentQueries } from "@/features/deployment/useDeploymentQueries"
+import { useDeploymentChannel } from "@/features/deployment/useDeploymentChannel"
+import { toLogLine } from "@/features/deployment/log-format"
 import { isTerminalStatus } from "@/features/deployment/types"
 import { projectQueries } from "@/features/project/useProjectQueries"
 import { DeploymentHeader } from "./deployment-header"
@@ -17,6 +19,7 @@ import { DeploymentDetailSkeleton } from "./deployment-detail-skeleton"
 function DeploymentDetailPage() {
   const params = useParams<{ id: string }>()
   const deploymentId = params?.id
+  const queryClient = useQueryClient()
 
   const {
     data: deployment,
@@ -24,35 +27,56 @@ function DeploymentDetailPage() {
     isError,
   } = deploymentQueries.useGetDeployment(deploymentId)
 
-  const isLive = deployment ? !isTerminalStatus(deployment.status) : false
-
   const {
-    data: logs,
+    data: history,
     isLoading: isLoadingLogs,
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
-  } = deploymentQueries.useGetDeploymentLogs(deploymentId, isLive)
+  } = deploymentQueries.useGetDeploymentLogs(deploymentId)
 
-  // The project name only feeds the back link, so it can arrive late.
-  const { data: project } = projectQueries.useGetProject(deployment?.project_id)
+  // The whole history has to be on screen before the channel opens, or the
+  // lines published in between never reach the box.
+  const isHistoryComplete = !isLoadingLogs && !hasNextPage
 
-  const queryClient = useQueryClient()
+  useEffect(() => {
+    if (!hasNextPage || isFetchingNextPage) {
+      return
+    }
+
+    fetchNextPage()
+  }, [hasNextPage, isFetchingNextPage, fetchNextPage])
+
+  const channel = useDeploymentChannel(deploymentId, isHistoryComplete)
+
+  // The channel is ahead of the fetched row once a status event lands.
+  const status = channel.status ?? deployment?.status
+  const isLive = status ? !isTerminalStatus(status) : false
+  const errorMessage = channel.error ?? deployment?.error_message ?? null
+
+  const lines = useMemo(
+    () => [...(history ?? []).map(toLogLine), ...channel.lines],
+    [history, channel.lines]
+  )
+
   const projectId = deployment?.project_id
-  const status = deployment?.status
 
-  // Once the deployment settles the project lists still hold the older status.
+  // The other views still hold the older status once this one settles.
   useEffect(() => {
     if (!projectId || !status || !isTerminalStatus(status)) {
       return
     }
 
+    queryClient.invalidateQueries({ queryKey: ["deployment", deploymentId] })
     queryClient.invalidateQueries({ queryKey: ["projects"] })
     queryClient.invalidateQueries({ queryKey: ["project", projectId] })
     queryClient.invalidateQueries({
       queryKey: ["project-deployments", projectId],
     })
-  }, [queryClient, projectId, status])
+  }, [queryClient, deploymentId, projectId, status])
+
+  // The project name only feeds the back link, so it can arrive late.
+  const { data: project } = projectQueries.useGetProject(projectId)
 
   if (isLoading) {
     return (
@@ -62,7 +86,7 @@ function DeploymentDetailPage() {
     )
   }
 
-  if (isError || !deployment) {
+  if (isError || !deployment || !status) {
     return (
       <div className="mx-auto w-full max-w-7xl">
         <div className="rounded-2xl border border-border bg-background px-6 py-16 text-center text-sm text-muted-foreground">
@@ -76,24 +100,21 @@ function DeploymentDetailPage() {
     <div className="mx-auto flex w-full max-w-7xl flex-col gap-8">
       <DeploymentHeader
         deployment={deployment}
+        status={status}
         projectName={project?.project_name ?? "project"}
       />
 
-      <DeploymentTimeline status={deployment.status} />
+      <DeploymentTimeline status={status} />
 
-      {deployment.error_message ? (
-        <DeploymentErrorAlert message={deployment.error_message} />
-      ) : null}
+      {errorMessage ? <DeploymentErrorAlert message={errorMessage} /> : null}
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-[20rem_1fr]">
         <DeploymentSummaryCard deployment={deployment} />
         <DeploymentLogs
-          logs={logs ?? []}
+          lines={lines}
           isLive={isLive}
-          isLoading={isLoadingLogs}
-          hasMoreLogs={hasNextPage}
-          isLoadingMore={isFetchingNextPage}
-          onLoadMore={() => fetchNextPage()}
+          isConnected={channel.isConnected}
+          isLoading={isLoadingLogs || isFetchingNextPage}
         />
       </div>
     </div>

@@ -1,13 +1,10 @@
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { useApiStore } from "@/store/useApiStore"
 import { GeneralData } from "@/shared/types/responses"
-import { Deployment, isTerminalStatus } from "@/features/deployment/types"
+import { Deployment } from "@/features/deployment/types"
 import { projectService } from "./project-service"
 import { CreateProjectPayload } from "./schema"
 import { Project, ProjectDetail } from "./types"
-
-/** How often a project that is mid deployment is refreshed. */
-const LIVE_REFETCH_INTERVAL = 5000
 
 class ProjectQueries {
 
@@ -28,11 +25,6 @@ class ProjectQueries {
             queryFn: () => projectService.getProject.bind(projectService)(projectId!),
             enabled: isApiReady && !!projectId,
             select: (data: GeneralData<ProjectDetail>) => data?.data,
-            // A deployment in flight moves on the server, so keep pulling until it settles.
-            refetchInterval: (query) => {
-                const status = query.state.data?.data?.last_deployment?.status
-                return status && !isTerminalStatus(status) ? LIVE_REFETCH_INTERVAL : false
-            },
         })
     }
 

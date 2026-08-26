@@ -49,6 +49,25 @@ export type DeploymentLogPage = {
     next_cursor: string | null
 }
 
+/** A batch of lines pushed on `deployment:{id}`, `seq` climbs so repeats can be dropped. */
+export type LogEvent = {
+    event: "log"
+    seq: number
+    type: "system" | "build"
+    lines: string[]
+    at: string
+}
+
+/** Status moves for the same channel, this is what drives the timeline. */
+export type StatusEvent = {
+    event: "status"
+    status: DeploymentStatus
+    error?: string
+    at: string
+}
+
+export type DeployEvent = LogEvent | StatusEvent
+
 /** POST /v1/projects/{id}/deploy */
 export type StartedDeployment = {
     deployment_id: string

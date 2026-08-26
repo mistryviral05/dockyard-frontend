@@ -3,16 +3,19 @@ import { format } from "date-fns"
 import { ArrowLeft } from "lucide-react"
 
 import { StatusBadge } from "@/shared/components/myui/status-badge"
-import type { Deployment } from "@/features/deployment/types"
+import type { Deployment, DeploymentStatus } from "@/features/deployment/types"
 
 function DeploymentHeader({
   deployment,
+  status,
   projectName,
 }: {
   deployment: Deployment
+  /** Comes from the live channel when it is ahead of the fetched row. */
+  status: DeploymentStatus
   projectName: string
 }) {
-  const { id, status, branch, created_at, project_id } = deployment
+  const { id, branch, created_at, project_id } = deployment
 
   return (
     <div className="flex flex-col gap-6">

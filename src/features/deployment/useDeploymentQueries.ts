@@ -2,13 +2,11 @@ import { useInfiniteQuery, useQuery } from "@tanstack/react-query"
 import { useApiStore } from "@/store/useApiStore"
 import { GeneralData } from "@/shared/types/responses"
 import { deploymentService } from "./deployment-service"
-import { Deployment, DeploymentLogPage, isTerminalStatus } from "./types"
-
-/** How often a deployment that is still moving is refreshed. */
-const LIVE_REFETCH_INTERVAL = 4000
+import { Deployment, DeploymentLogPage } from "./types"
 
 class DeploymentQueries {
 
+    /** Status moves arrive on the centrifugo channel, so this is never polled. */
     useGetDeployment(deploymentId?: string) {
         const isApiReady = useApiStore((state) => state.isApiReady)
         return useQuery({
@@ -16,15 +14,14 @@ class DeploymentQueries {
             queryFn: () => deploymentService.getDeployment.bind(deploymentService)(deploymentId!),
             enabled: isApiReady && !!deploymentId,
             select: (data: GeneralData<Deployment>) => data?.data,
-            refetchInterval: (query) => {
-                const status = query.state.data?.data?.status
-                return status && !isTerminalStatus(status) ? LIVE_REFETCH_INTERVAL : false
-            },
         })
     }
 
-    /** Logs page from oldest to newest, the cursor walks forward to the newer lines. */
-    useGetDeploymentLogs(deploymentId?: string, isLive: boolean = false, limit: number = 200) {
+    /**
+     * History only, from oldest to newest, the cursor walks forward to the newer lines.
+     * Live lines come from the channel once every page is in.
+     */
+    useGetDeploymentLogs(deploymentId?: string, limit: number = 200) {
         const isApiReady = useApiStore((state) => state.isApiReady)
         return useInfiniteQuery({
             queryKey: ["deployment-logs", deploymentId, limit],
@@ -35,7 +32,6 @@ class DeploymentQueries {
             getNextPageParam: (lastPage: GeneralData<DeploymentLogPage>) =>
                 lastPage?.data?.next_cursor ?? undefined,
             select: (data) => data.pages.flatMap((page) => page?.data?.items || []),
-            refetchInterval: isLive ? LIVE_REFETCH_INTERVAL : false,
         })
     }
 

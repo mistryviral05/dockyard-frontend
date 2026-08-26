@@ -1,32 +1,28 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { ArrowDown, Terminal } from "lucide-react"
+import { ArrowDown, Check, Copy, Terminal } from "lucide-react"
 
 import { Button } from "@/shared/components/ui/button"
 import { Skeleton } from "@/shared/components/ui/skeleton"
-import { CircularSpinner } from "@/shared/components/myui/circular-spinner"
 import { cn } from "@/shared/lib/utils"
-import type { DeploymentLog } from "@/features/deployment/types"
+import type { LogLine } from "@/features/deployment/log-format"
 import { DeploymentLogLine } from "./deployment-log-line"
 import { DeploymentLogsEmptyState } from "./deployment-logs-empty-state"
 
 function DeploymentLogs({
-  logs,
+  lines,
   isLive,
+  isConnected = false,
   isLoading = false,
-  hasMoreLogs = false,
-  isLoadingMore = false,
-  onLoadMore,
 }: {
-  logs: DeploymentLog[]
+  lines: LogLine[]
   isLive: boolean
+  isConnected?: boolean
   isLoading?: boolean
-  hasMoreLogs?: boolean
-  isLoadingMore?: boolean
-  onLoadMore?: () => void
 }) {
   const [isFollowing, setIsFollowing] = useState(true)
+  const [hasCopied, setHasCopied] = useState(false)
   const bottomRef = useRef<HTMLDivElement>(null)
 
   // New lines arrive at the bottom, so keep the view pinned there while following.
@@ -36,78 +32,127 @@ function DeploymentLogs({
     }
 
     bottomRef.current?.scrollIntoView({ block: "end" })
-  }, [logs.length, isFollowing])
+  }, [lines.length, isFollowing])
 
-  // A running build keeps producing pages, so pull them without asking.
   useEffect(() => {
-    if (!isLive || !hasMoreLogs || isLoadingMore) {
+    if (!hasCopied) {
       return
     }
 
-    onLoadMore?.()
-  }, [isLive, hasMoreLogs, isLoadingMore, onLoadMore])
+    const timer = setTimeout(() => setHasCopied(false), 2000)
+    return () => clearTimeout(timer)
+  }, [hasCopied])
+
+  const copyLogs = async () => {
+    await navigator.clipboard.writeText(lines.map((line) => line.text).join("\n"))
+    setHasCopied(true)
+  }
+
+  const errorCount = lines.filter((line) => line.tone === "error").length
+  const warningCount = lines.filter((line) => line.tone === "warning").length
 
   return (
-    <div className="flex flex-col gap-4">
+    // min-w-0 keeps a long build line from stretching the grid column.
+    <div className="flex min-w-0 flex-col gap-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h2 className="flex items-center gap-2 font-heading text-lg font-medium">
           <Terminal className="size-4 text-muted-foreground" />
           Logs
           {isLive ? (
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-info/10 px-2 py-0.5 text-xs font-medium text-info">
-              <span className="size-1.5 animate-pulse rounded-full bg-info" />
-              Live
+            <span
+              className={cn(
+                "inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-xs font-medium",
+                isConnected
+                  ? "bg-info/10 text-info"
+                  : "bg-muted text-muted-foreground"
+              )}
+            >
+              <span
+                className={cn(
+                  "size-1.5 rounded-full",
+                  isConnected ? "animate-pulse bg-info" : "bg-muted-foreground"
+                )}
+              />
+              {isConnected ? "Live" : "Connecting"}
             </span>
           ) : null}
         </h2>
 
-        <Button
-          variant={isFollowing ? "secondary" : "outline"}
-          size="sm"
-          onClick={() => setIsFollowing((value) => !value)}
-        >
-          <ArrowDown
-            data-icon="inline-start"
-            className={cn(!isFollowing && "text-muted-foreground")}
-          />
-          {isFollowing ? "Following" : "Follow"}
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button variant="outline" size="sm" onClick={copyLogs}>
+            {hasCopied ? (
+              <Check data-icon="inline-start" className="text-success" />
+            ) : (
+              <Copy data-icon="inline-start" />
+            )}
+            {hasCopied ? "Copied" : "Copy"}
+          </Button>
+
+          <Button
+            variant={isFollowing ? "secondary" : "outline"}
+            size="sm"
+            onClick={() => setIsFollowing((value) => !value)}
+          >
+            <ArrowDown
+              data-icon="inline-start"
+              className={cn(!isFollowing && "text-muted-foreground")}
+            />
+            {isFollowing ? "Following" : "Follow"}
+          </Button>
+        </div>
       </div>
 
-      <div className="rounded-2xl bg-muted p-1.5">
-        {isLoading ? (
-          <div className="flex flex-col gap-2 rounded-xl border border-border bg-background px-4 py-3">
-            {Array.from({ length: 10 }).map((_, index) => (
-              <Skeleton key={index} className="h-3.5 w-full" />
-            ))}
-          </div>
-        ) : logs.length === 0 ? (
-          <DeploymentLogsEmptyState />
-        ) : (
-          <div className="max-h-112 overflow-y-auto rounded-xl border border-border bg-background py-3">
-            {logs.map((log) => (
-              <DeploymentLogLine key={log.id} log={log} />
-            ))}
+      <div className="min-w-0 rounded-2xl bg-muted p-1.5">
+        <div className="min-w-0 overflow-hidden rounded-xl border border-border bg-background">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border px-4 py-2">
+            <span className="font-mono text-xs text-muted-foreground">
+              {lines.length} {lines.length === 1 ? "line" : "lines"}
+            </span>
 
-            {hasMoreLogs && !isLive ? (
-              <div className="flex justify-center px-4 pt-3">
-                <Button
-                  variant="outline"
-                  size="xs"
-                  disabled={isLoadingMore}
-                  onClick={onLoadMore}
-                >
-                  {isLoadingMore ? (
-                    <CircularSpinner size="xs" className="size-3" />
-                  ) : null}
-                  Load more logs
-                </Button>
-              </div>
-            ) : null}
-
-            <div ref={bottomRef} />
+            <div className="flex items-center gap-3 text-xs">
+              {warningCount > 0 ? (
+                <span className="inline-flex items-center gap-1.5 text-warning">
+                  <span className="size-1.5 rounded-full bg-warning" />
+                  {warningCount} {warningCount === 1 ? "warning" : "warnings"}
+                </span>
+              ) : null}
+              {errorCount > 0 ? (
+                <span className="inline-flex items-center gap-1.5 text-destructive">
+                  <span className="size-1.5 rounded-full bg-destructive" />
+                  {errorCount} {errorCount === 1 ? "error" : "errors"}
+                </span>
+              ) : null}
+            </div>
           </div>
-        )}
+
+          {isLoading && lines.length === 0 ? (
+            <div className="flex flex-col gap-2 px-4 py-3">
+              {Array.from({ length: 10 }).map((_, index) => (
+                <Skeleton key={index} className="h-4 w-full" />
+              ))}
+            </div>
+          ) : lines.length === 0 ? (
+            <DeploymentLogsEmptyState />
+          ) : (
+            <div className="max-h-128 min-w-0 overflow-y-auto py-2">
+              {lines.map((line) => (
+                <DeploymentLogLine key={line.key} line={line} />
+              ))}
+
+              {isLive ? (
+                <div className="flex items-center gap-3 px-4 py-1">
+                  <span className="w-20 shrink-0" />
+                  <span className="inline-flex items-center gap-1.5 font-mono text-sm text-muted-foreground">
+                    <span className="size-1.5 animate-pulse rounded-full bg-info" />
+                    waiting for the next step
+                  </span>
+                </div>
+              ) : null}
+
+              <div ref={bottomRef} />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   )
