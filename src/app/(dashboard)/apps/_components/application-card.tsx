@@ -9,8 +9,8 @@ import {
 } from "@/shared/components/ui/card"
 import { Badge } from "@/shared/components/myui/badge"
 import { PROJECT_STACK_LABELS } from "@/features/project/schema"
+import { StatusBadge } from "@/shared/components/myui/status-badge"
 import type { Project } from "@/features/project/types"
-import { DeploymentStatusBadge } from "./deployment-status-badge"
 
 function ApplicationCard({ project }: { project: Project }) {
   const { id, project_name, project_stack, repo_name, deployment_status } =
@@ -26,7 +26,7 @@ function ApplicationCard({ project }: { project: Project }) {
           <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-muted text-xs font-semibold text-muted-foreground uppercase">
             {project_name.slice(0, 2)}
           </span>
-          <DeploymentStatusBadge status={deployment_status} />
+          <StatusBadge status={deployment_status} />
         </CardHeader>
 
         <CardContent className="pt-6 pb-6">

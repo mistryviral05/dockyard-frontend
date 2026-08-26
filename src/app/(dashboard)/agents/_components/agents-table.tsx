@@ -11,7 +11,7 @@ import {
   TableRow,
 } from "@/shared/components/ui/table"
 import { agentQueries } from "@/features/agent/useAgentQueries"
-import { AgentStatusBadge } from "./agent-status-badge"
+import { AgentStatusBadge } from "@/shared/components/myui/agent-status-badge"
 import { AgentsEmptyState } from "./agents-empty-state"
 import { AgentsTableSkeleton } from "./agents-table-skeleton"
 
