@@ -40,6 +40,7 @@ export default function ImportPage() {
     const repoUrl = searchParams.get("repo_url") ?? ""
     const repoOwner = searchParams.get("repo_owner") ?? ""
     const isPrivate = searchParams.get("is_private") === "true"
+    const defaultBranch = searchParams.get("default_branch") ?? undefined
 
     const {
         register,
@@ -73,6 +74,7 @@ export default function ImportPage() {
             repo_url: repoUrl,
             repo_owner: repoOwner,
             is_private: isPrivate,
+            default_branch: defaultBranch,
         })
 
         if (!parsed.success) {
@@ -85,11 +87,12 @@ export default function ImportPage() {
 
         createProject(parsed.data, {
             onSuccess: (response) => {
-                enqueueSnackbar(response.message, {
+                enqueueSnackbar("Project is created successfully", {
                     variant: "success",
                     autoHideDuration: 3000,
                 })
-                router.push("/apps")
+                // Replace, so going back does not open the import form again.
+                router.replace(`/apps/${response.data.id}`)
             },
             onError: (error) => {
                 // The API reports every failure as { status: "error", error: "..." }.

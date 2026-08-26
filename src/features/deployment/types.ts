@@ -7,6 +7,13 @@ export type DeploymentStatus =
     | "failed"
     | "stopped"
 
+const TERMINAL_STATUSES: DeploymentStatus[] = ["running", "failed", "stopped"]
+
+/** A terminal deployment never changes again, so it does not need refreshing. */
+export function isTerminalStatus(status: DeploymentStatus) {
+    return TERMINAL_STATUSES.includes(status)
+}
+
 export type DeploymentTrigger = "manual" | "webhook"
 
 /** GET /v1/deployments/{id} and GET /v1/projects/{id}/deployments */

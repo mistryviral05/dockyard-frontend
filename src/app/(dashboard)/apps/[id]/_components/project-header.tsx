@@ -9,7 +9,7 @@ import type { ProjectDetail } from "@/features/project/types"
 import { DeployButton } from "./deploy-button"
 
 function ProjectHeader({ project }: { project: ProjectDetail }) {
-  const { project_name, project_stack, repository, agent, last_deployment } =
+  const { id, project_name, project_stack, repository, agent, last_deployment } =
     project
 
   return (
@@ -67,7 +67,7 @@ function ProjectHeader({ project }: { project: ProjectDetail }) {
               <ExternalLink data-icon="inline-end" />
             </Button>
           ) : null}
-          <DeployButton hasAgent={Boolean(agent)} />
+          <DeployButton projectId={id} hasAgent={Boolean(agent)} />
         </div>
       </div>
     </div>

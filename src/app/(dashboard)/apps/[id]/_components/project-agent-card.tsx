@@ -2,6 +2,9 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import { useQueryClient } from "@tanstack/react-query"
+import { isAxiosError } from "axios"
+import { useSnackbar } from "notistack"
 import { Server } from "lucide-react"
 
 import {
@@ -20,19 +23,53 @@ import {
   SelectValue,
 } from "@/shared/components/ui/select"
 import { AgentStatusBadge } from "@/shared/components/myui/agent-status-badge"
+import { CircularSpinner } from "@/shared/components/myui/circular-spinner"
+import { projectQueries } from "@/features/project/useProjectQueries"
 import type { Agent } from "@/features/agent/types"
-import type { ProjectAgent } from "@/features/project/types"
+import type { ProjectAgent, ProjectErrorResponse } from "@/features/project/types"
 
 function ProjectAgentCard({
+  projectId,
   agent,
   agents,
 }: {
+  projectId: string
   agent: ProjectAgent | null
   agents: Agent[]
 }) {
   const [selectedAgentId, setSelectedAgentId] = useState<string | null>(
     agent?.id ?? null
   )
+  const queryClient = useQueryClient()
+  const { enqueueSnackbar } = useSnackbar()
+  const { mutate: setAgent, isPending } =
+    projectQueries.useSetProjectAgent(projectId)
+
+  const connectAgent = () => {
+    if (!selectedAgentId) {
+      return
+    }
+
+    setAgent(selectedAgentId, {
+      // The api answers with the whole project, so the cache can take it as is.
+      onSuccess: (response) => {
+        queryClient.setQueryData(["project", projectId], response)
+        enqueueSnackbar("Server connected to this project", {
+          variant: "success",
+          autoHideDuration: 3000,
+        })
+      },
+      onError: (error) => {
+        const message = isAxiosError<ProjectErrorResponse>(error)
+          ? error.response?.data?.error
+          : undefined
+        enqueueSnackbar(message ?? "Failed to set the agent, please try again", {
+          variant: "error",
+          autoHideDuration: 3000,
+        })
+      },
+    })
+  }
 
   const nameById = (value: string | null) =>
     agents.find((item) => item.id === value)?.name ?? "Select agent"
@@ -94,8 +131,14 @@ function ProjectAgentCard({
 
             <Button
               size="sm"
-              disabled={!selectedAgentId || selectedAgentId === agent?.id}
+              disabled={
+                !selectedAgentId || selectedAgentId === agent?.id || isPending
+              }
+              onClick={connectAgent}
             >
+              {isPending ? (
+                <CircularSpinner size="xs" data-icon="inline-start" />
+              ) : null}
               {agent ? "Change" : "Connect"}
             </Button>
           </div>

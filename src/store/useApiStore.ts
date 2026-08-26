@@ -14,6 +14,7 @@ type ApiStore = {
 
     requestGet: <T>(url: string, options?: RequestOptions) => Promise<T>;
     requestPost: <T>(url: string, data?: unknown, options?: RequestOptions) => Promise<T>;
+    requestPut: <T>(url: string, data?: unknown, options?: RequestOptions) => Promise<T>;
 }
 export const useApiStore = create<ApiStore>((set, get) => ({
     clerkGetToken: null,
@@ -40,6 +41,15 @@ export const useApiStore = create<ApiStore>((set, get) => ({
         const token = auth ? await get().clerkGetToken?.() : null;
 
         const response = await api.post<T>(url, data, {
+            headers: token ? { Authorization: `Bearer ${token}` } : undefined
+        })
+        return response.data
+    },
+    requestPut: async <T,>(url: string, data?: unknown, options: RequestOptions = {}) => {
+        const { auth = true } = options;
+        const token = auth ? await get().clerkGetToken?.() : null;
+
+        const response = await api.put<T>(url, data, {
             headers: token ? { Authorization: `Bearer ${token}` } : undefined
         })
         return response.data

@@ -1,9 +1,13 @@
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { useApiStore } from "@/store/useApiStore"
 import { GeneralData } from "@/shared/types/responses"
+import { Deployment, isTerminalStatus } from "@/features/deployment/types"
 import { projectService } from "./project-service"
 import { CreateProjectPayload } from "./schema"
-import { Project } from "./types"
+import { Project, ProjectDetail } from "./types"
+
+/** How often a project that is mid deployment is refreshed. */
+const LIVE_REFETCH_INTERVAL = 5000
 
 class ProjectQueries {
 
@@ -17,9 +21,46 @@ class ProjectQueries {
         })
     }
 
+    useGetProject(projectId?: string) {
+        const isApiReady = useApiStore((state) => state.isApiReady)
+        return useQuery({
+            queryKey: ["project", projectId],
+            queryFn: () => projectService.getProject.bind(projectService)(projectId!),
+            enabled: isApiReady && !!projectId,
+            select: (data: GeneralData<ProjectDetail>) => data?.data,
+            // A deployment in flight moves on the server, so keep pulling until it settles.
+            refetchInterval: (query) => {
+                const status = query.state.data?.data?.last_deployment?.status
+                return status && !isTerminalStatus(status) ? LIVE_REFETCH_INTERVAL : false
+            },
+        })
+    }
+
+    useGetProjectDeployments(projectId?: string, limit: number = 20) {
+        const isApiReady = useApiStore((state) => state.isApiReady)
+        return useQuery({
+            queryKey: ["project-deployments", projectId, limit],
+            queryFn: () => projectService.getProjectDeployments.bind(projectService)(projectId!, undefined, limit),
+            enabled: isApiReady && !!projectId,
+            select: (data: GeneralData<Deployment[]>) => data?.data || [],
+        })
+    }
+
     useCreateProject() {
         return useMutation({
             mutationFn: (payload: CreateProjectPayload) => projectService.createProject.bind(projectService)(payload),
+        })
+    }
+
+    useSetProjectAgent(projectId: string) {
+        return useMutation({
+            mutationFn: (agentId: string) => projectService.setProjectAgent.bind(projectService)(projectId, agentId),
+        })
+    }
+
+    useDeployProject(projectId: string) {
+        return useMutation({
+            mutationFn: (branch?: string) => projectService.deployProject.bind(projectService)(projectId, branch),
         })
     }
 

@@ -62,6 +62,12 @@ export const createProjectSchema = z.object({
     .min(1, "Repository owner is required")
     .max(255, "Repository owner must be at most 255 characters"),
   is_private: z.boolean().optional().default(false),
+  /** Left out when the repository list does not carry it, the api then falls back to main. */
+  default_branch: z
+    .string()
+    .trim()
+    .max(255, "Default branch must be at most 255 characters")
+    .optional(),
 })
 
 /** The fields the user actually fills in — the rest come from the url and the store. */

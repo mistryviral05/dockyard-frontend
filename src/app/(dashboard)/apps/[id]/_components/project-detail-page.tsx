@@ -1,19 +1,46 @@
 "use client"
 
+import { useParams } from "next/navigation"
+
+import { projectQueries } from "@/features/project/useProjectQueries"
+import { agentQueries } from "@/features/agent/useAgentQueries"
 import { ProjectHeader } from "./project-header"
 import { ProjectRepositoryCard } from "./project-repository-card"
 import { ProjectAgentCard } from "./project-agent-card"
 import { ProjectLastDeploymentCard } from "./project-last-deployment-card"
 import { ProjectDeploymentsTable } from "./project-deployments-table"
-import {
-  placeholderAgents,
-  placeholderDeployments,
-  placeholderProject,
-} from "./placeholder-project"
+import { ProjectDetailSkeleton } from "./project-detail-skeleton"
 
 function ProjectDetailPage() {
-  // Static sample for now, the detail query replaces it at integration time.
-  const project = placeholderProject
+  const params = useParams<{ id: string }>()
+  const projectId = params?.id
+
+  const {
+    data: project,
+    isLoading,
+    isError,
+  } = projectQueries.useGetProject(projectId)
+  const { data: agents } = agentQueries.useGetAgents()
+  const { data: deployments, isLoading: isLoadingDeployments } =
+    projectQueries.useGetProjectDeployments(projectId)
+
+  if (isLoading) {
+    return (
+      <div className="mx-auto w-full max-w-7xl">
+        <ProjectDetailSkeleton />
+      </div>
+    )
+  }
+
+  if (isError || !project) {
+    return (
+      <div className="mx-auto w-full max-w-7xl">
+        <div className="rounded-2xl border border-border bg-background px-6 py-16 text-center text-sm text-muted-foreground">
+          Could not load this project. Please try again.
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="mx-auto flex w-full max-w-7xl flex-col gap-8">
@@ -21,13 +48,20 @@ function ProjectDetailPage() {
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         <ProjectRepositoryCard project={project} />
-        <ProjectAgentCard agent={project.agent} agents={placeholderAgents} />
+        <ProjectAgentCard
+          projectId={project.id}
+          agent={project.agent}
+          agents={agents ?? []}
+        />
         <ProjectLastDeploymentCard deployment={project.last_deployment} />
       </div>
 
       <div className="flex flex-col gap-4">
         <h2 className="font-heading text-lg font-medium">Deployments</h2>
-        <ProjectDeploymentsTable deployments={placeholderDeployments} />
+        <ProjectDeploymentsTable
+          deployments={deployments ?? []}
+          isLoading={isLoadingDeployments}
+        />
       </div>
     </div>
   )
