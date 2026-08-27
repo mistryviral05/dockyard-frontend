@@ -26,7 +26,7 @@ function DeploymentSummaryCard({ deployment }: { deployment: Deployment }) {
   const took = duration(deployment)
 
   return (
-    <Card size="sm" className="h-full">
+    <Card size="sm" className="">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Info className="size-4 text-muted-foreground" />

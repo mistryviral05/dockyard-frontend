@@ -112,7 +112,7 @@ function DeploymentDetailPage() {
 
       {errorMessage ? <DeploymentErrorAlert message={errorMessage} /> : null}
 
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-[20rem_1fr]">
+      <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-[20rem_1fr] ">
         <DeploymentSummaryCard deployment={deployment} />
         <DeploymentLogs
           lines={lines}

@@ -102,9 +102,9 @@ function DeploymentLogs({
         </div>
       </div>
 
-      <div className="min-w-0 rounded-xl bg-muted p-1.5">
-        <div className="min-w-0 overflow-hidden rounded-xl border border-border bg-background">
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border px-4 py-2">
+      <div className="min-w-0 rounded-xl  p-1.5">
+        <div className="min-w-0 overflow-hidden rounded-xl border border-border/50 bg-sidebar">
+          <div className="flex flex-wrap items-center justify-between gap-3  px-4 py-2">
             <span className="font-mono text-xs text-muted-foreground">
               {lines.length} {lines.length === 1 ? "line" : "lines"}
             </span>

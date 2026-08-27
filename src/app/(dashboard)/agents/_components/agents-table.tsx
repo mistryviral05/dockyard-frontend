@@ -45,7 +45,7 @@ function AgentsTable() {
   }
 
   return (
-    <div className="rounded-xl bg-muted p-1.5">
+    <div className="rounded-3xl bg-sidebar p-1.5">
       <Table className="border-separate border-spacing-0">
         <TableHeader>
           <TableRow className="border-0 hover:bg-transparent">
@@ -68,13 +68,12 @@ function AgentsTable() {
         </TableHeader>
 
         <TableBody
-          className="[&_td]:border-b [&_td]:border-border [&_td]:bg-background
-            [&_tr:first-child_td]:border-t
+          className=" [&_td]:border-border/40 [&_td]:bg-secondary
             [&_tr:first-child_td:first-child]:rounded-tl-xl
             [&_tr:first-child_td:last-child]:rounded-tr-xl
             [&_tr:last-child_td:first-child]:rounded-bl-xl
             [&_tr:last-child_td:last-child]:rounded-br-xl
-            [&_tr_td:first-child]:border-l [&_tr_td:last-child]:border-r"
+            "
         >
           {agents.map((agent, index) => (
             <TableRow key={agent.id} className="border-0 hover:bg-transparent">
