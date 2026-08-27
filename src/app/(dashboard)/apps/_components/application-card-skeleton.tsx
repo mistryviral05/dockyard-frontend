@@ -1,20 +1,21 @@
-import { Card, CardContent, CardHeader } from "@/shared/components/ui/card"
 import { Skeleton } from "@/shared/components/ui/skeleton"
 
 function ApplicationCardSkeleton() {
   return (
-    <Card className="h-full gap-0 py-0">
-      <CardHeader className="flex items-start justify-between gap-3 pt-6">
-        <Skeleton className="size-9 rounded-full" />
-        <Skeleton className="h-5 w-24 rounded-full" />
-      </CardHeader>
+    // Mirrors the card layout, tile overhang included, so nothing jumps on load.
+    <div className="relative pt-8">
+      <div className="flex flex-col items-center rounded-2xl border border-border/50 bg-card px-5 pt-12 pb-5 shadow-float">
+        <Skeleton className="absolute top-0 left-1/2 size-16 -translate-x-1/2 rounded-2xl" />
 
-      <CardContent className="pt-6 pb-6">
-        <Skeleton className="h-5 w-36" />
-        <Skeleton className="mt-2 h-3.5 w-28" />
-        <Skeleton className="mt-4 h-5 w-20 rounded-full" />
-      </CardContent>
-    </Card>
+        <Skeleton className="h-5 w-32" />
+        <Skeleton className="mt-2 h-4 w-20" />
+
+        <div className="mt-5 flex w-full items-center justify-between gap-3 border-t border-border/40 pt-4">
+          <Skeleton className="h-3.5 w-24" />
+          <Skeleton className="h-6 w-20 rounded-full" />
+        </div>
+      </div>
+    </div>
   )
 }
 

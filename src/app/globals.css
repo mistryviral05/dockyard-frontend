@@ -131,6 +131,18 @@
 
   --shadow-raised-sunken: 0px 1px 2px 0px rgb(0 0 0 / 0.35) inset,
     0px 1px 0px 0px rgb(255 255 255 / 0.06) inset;
+
+  /*
+    A card that sits above the panel: lit top edge, a close contact shadow and
+    a wide soft one underneath so it reads as a physical slab.
+  */
+  --shadow-float: 0px 1px 0px 0px rgb(255 255 255 / 0.07) inset,
+    0px 2px 4px -2px rgb(0 0 0 / 0.6),
+    0px 18px 40px -18px rgb(0 0 0 / 0.85);
+
+  --shadow-float-hover: 0px 1px 0px 0px rgb(255 255 255 / 0.1) inset,
+    0px 4px 8px -3px rgb(0 0 0 / 0.65),
+    0px 30px 60px -22px rgb(0 0 0 / 0.9);
 }
 
 @layer base {

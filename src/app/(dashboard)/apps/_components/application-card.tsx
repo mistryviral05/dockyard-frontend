@@ -1,13 +1,6 @@
 import Link from "next/link"
 import { GitBranch } from "lucide-react"
 
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/shared/components/ui/card"
-import { Badge } from "@/shared/components/myui/badge"
 import { PROJECT_STACK_LABELS } from "@/features/project/schema"
 import { StatusBadge } from "@/shared/components/myui/status-badge"
 import type { Project } from "@/features/project/types"
@@ -17,33 +10,40 @@ function ApplicationCard({ project }: { project: Project }) {
     project
 
   return (
-    <Link
-      href={`/apps/${id}`}
-      className="group  outline-none "
-    >
-      <Card className="h-full gap-0 py-0 transition-colors">
-        <CardHeader className="flex items-start justify-between gap-3 pt-6">
-          <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-muted text-xs font-semibold text-muted-foreground uppercase">
-            {project_name.slice(0, 2)}
-          </span>
-          <StatusBadge status={deployment_status} />
-        </CardHeader>
+    // The top padding leaves room for the tile that hangs over the card edge.
+    <Link href={`/apps/${id}`} className="group relative block pt-8 outline-none">
+      {/*
+        A second slab peeking out from under the card. It is what makes the
+        whole thing read as lifted rather than painted on the panel.
+      */}
+      <span
+        aria-hidden
+        className="absolute inset-x-5 -bottom-1.5 h-12 rounded-2xl bg-foreground/6 transition-all duration-300 ease-out group-hover:inset-x-3 group-hover:-bottom-2.5"
+      />
 
-        <CardContent className="pt-6 pb-6">
-          <CardTitle className="truncate text-lg">{project_name}</CardTitle>
+      <div className="relative flex h-full flex-col items-center rounded-2xl border border-border/50 bg-sidebar px-5 pt-12 pb-5 text-center shadow-float transition-all duration-300 ease-out group-hover:-translate-y-1 group-hover:border-border group-hover:shadow-float-hover group-focus-visible:ring-3 group-focus-visible:ring-ring/40">
+        {/* The identity tile, raised on its own so it sits above the card face. */}
+        <span className="absolute -top-8 left-1/2 flex size-16 -translate-x-1/2 items-center justify-center rounded-2xl border border-white/10 bg-secondary bg-linear-to-b from-white/4 to-transparent text-lg font-semibold text-primary uppercase shadow-raised transition-transform duration-300 ease-out group-hover:-translate-y-0.5">
+          {project_name.slice(0, 2)}
+        </span>
 
-          <p className="mt-1 flex items-center gap-1.5 truncate font-mono text-xs text-muted-foreground">
+        <h3 className="w-full truncate font-heading text-base font-medium">
+          {project_name}
+        </h3>
+
+        <p className="mt-1 text-sm text-muted-foreground">
+          {PROJECT_STACK_LABELS[project_stack] ?? project_stack}
+        </p>
+
+        <div className="mt-5 flex w-full items-center justify-between gap-3 border-t border-border/40 pt-4">
+          <span className="flex min-w-0 items-center gap-1.5 font-mono text-xs text-muted-foreground">
             <GitBranch className="size-3.5 shrink-0" />
-            {repo_name}
-          </p>
+            <span className="truncate">{repo_name}</span>
+          </span>
 
-          <div className="mt-3">
-            <Badge variant="outline" className="text-muted-foreground">
-              {PROJECT_STACK_LABELS[project_stack] ?? project_stack}
-            </Badge>
-          </div>
-        </CardContent>
-      </Card>
+          <StatusBadge status={deployment_status} />
+        </div>
+      </div>
     </Link>
   )
 }
