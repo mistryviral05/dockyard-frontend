@@ -110,19 +110,19 @@ export default function ImportPage() {
     return (
         <Card className="w-full max-w-2xl ">
             <CardHeader>
-                <h1 className="text-2xl font-semibold">New Project</h1>
+                <h1 className="font-heading text-2xl font-semibold tracking-tight">New project</h1>
             </CardHeader>
             <form onSubmit={handleSubmit(onSubmit)} noValidate>
                 <CardContent>
-                    <div className="bg-gray-100 p-3 rounded-2xl flex flex-col gap-2 border-2 border-gray-200">
-                        <p className="text-gray-500 text-xs">Import your project from GitHub</p>
+                    <div className="bg-muted/50 p-3 rounded-xl flex flex-col gap-2 border border-border">
+                        <p className="text-muted-foreground text-xs">Import your project from GitHub</p>
                         <div className="flex items-center gap-5">
                             <Link href={repoUrl || "#"} className="flex items-center gap-2" target="_blank">
                                 <GithubIcon className="size-4" />
                                 <span className="text-sm font-medium">{fullName}</span>
                             </Link>
 
-                            <div className="flex items-center gap-1 text-gray-500">
+                            <div className="flex items-center gap-1 text-muted-foreground">
                                 <GitBranch className="size-4" />
                                 <p>main</p>
                             </div>
@@ -131,7 +131,7 @@ export default function ImportPage() {
 
                     <div className="mt-6 flex flex-col gap-3 ">
                         <label htmlFor="project-name" className="text-sm font-medium">
-                            Project Name
+                            Project name
                         </label>
                         <Input
                             id="project-name"
@@ -146,7 +146,7 @@ export default function ImportPage() {
 
                     <div className="mt-6 flex flex-col gap-3 ">
                         <label htmlFor="project-stack" className="text-sm font-medium">
-                            Select Stack
+                            Stack
                         </label>
 
                         <Controller
@@ -162,9 +162,9 @@ export default function ImportPage() {
                                         className="w-full"
                                         aria-invalid={!!errors.project_stack}
                                     >
-                                        <SelectValue placeholder="Select Stack" className='max-w-full'>
+                                        <SelectValue placeholder="Pick a stack" className='max-w-full'>
                                             {(value: ProjectStack | null) =>
-                                                value ? PROJECT_STACK_LABELS[value] : "Select Stack"
+                                                value ? PROJECT_STACK_LABELS[value] : "Pick a stack"
                                             }
                                         </SelectValue>
                                     </SelectTrigger>
@@ -197,7 +197,7 @@ export default function ImportPage() {
                             </>
                         ) : (
                             <>
-                                <Plus />  Create Project
+                                <Plus />  Create project
                             </>
                         )}
                     </Button>

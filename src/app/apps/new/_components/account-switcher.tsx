@@ -57,7 +57,7 @@ function AccountSwitcher({ installations }: { installations: GithubInstallation[
       <DropdownMenuContent align="start" className="min-w-70">
 
         {installations.map((item) => (
-          <DropdownMenuItem key={item.id} data-active={item.id === activeAccLogin?.id} onClick={() => setActiveAccLogin(item)} className="pl-3 data-[active=true]:bg-gray-100">
+          <DropdownMenuItem key={item.id} data-active={item.id === activeAccLogin?.id} onClick={() => setActiveAccLogin(item)} className="pl-3 data-[active=true]:bg-muted">
             <GithubIcon className="size-4" />
             {item.account_login}
             {

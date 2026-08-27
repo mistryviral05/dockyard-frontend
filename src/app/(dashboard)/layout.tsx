@@ -1,6 +1,5 @@
-import { Navbar } from "@/shared/components/navbar/navbar"
+import { DashboardShell } from "@/shared/components/shell/dashboard-shell"
 import { HydrateWorkspace } from "@/providers/hydrate-workspace"
-import { auth } from "@clerk/nextjs/server"
 
 export default async function DashboardLayout({
     children,
@@ -9,10 +8,9 @@ export default async function DashboardLayout({
 }) {
     // await auth.protect()
     return (
-        <section className="flex min-h-full flex-col">
+        <>
             <HydrateWorkspace />
-            <Navbar />
-            <main className="flex-1 px-4 py-6 sm:px-6">{children}</main>
-        </section>
+            <DashboardShell>{children}</DashboardShell>
+        </>
     )
 }

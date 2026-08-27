@@ -74,7 +74,7 @@ function GitRepositories({ installations }: { installations: GithubInstallation[
               {filtered?.map((repo) => (
                 <li
                   key={repo.repo_id}
-                  className="flex items-center justify-between gap-3 px-6 py-3 hover:bg-gray-100 transition-all duration-200 ease-in-out "
+                  className="flex items-center justify-between gap-3 px-6 py-3 hover:bg-muted/60 transition-all duration-200 ease-in-out "
                 >
                   <div className="flex min-w-0 items-center gap-3">
                     <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-muted text-muted-foreground">

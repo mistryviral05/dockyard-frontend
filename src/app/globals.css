@@ -54,96 +54,63 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-:root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.148 0.004 228.8);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.148 0.004 228.8);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.148 0.004 228.8);
-  --primary: oklch(0.496 0.265 301.924);
-  --primary-foreground: oklch(0.977 0.014 308.299);
-  --secondary: oklch(0.967 0.001 286.375);
-  --secondary-foreground: oklch(0.21 0.006 285.885);
-  --muted: oklch(0.963 0.002 197.1);
-  --muted-foreground: oklch(0.56 0.021 213.5);
-  --accent: oklch(0.963 0.002 197.1);
-  --accent-foreground: oklch(0.218 0.008 223.9);
-  --destructive: oklch(0.577 0.245 27.325);
-  --success: oklch(0.596 0.145 163.2);
-  --success-foreground: oklch(0.982 0.018 155.8);
-  --info: oklch(0.546 0.192 258.4);
-  --info-foreground: oklch(0.97 0.014 254.6);
-  --warning: oklch(0.646 0.152 71.4);
-  --warning-foreground: oklch(0.987 0.022 95.3);
-  --border: oklch(0.925 0.005 214.3);
-  --input: oklch(0.925 0.005 214.3);
-  --ring: oklch(0.723 0.014 214.4);
-  --chart-1: oklch(0.827 0.119 306.383);
-  --chart-2: oklch(0.627 0.265 303.9);
-  --chart-3: oklch(0.558 0.288 302.321);
-  --chart-4: oklch(0.496 0.265 301.924);
-  --chart-5: oklch(0.438 0.218 303.724);
-  --radius: 0.3rem;
-  --sidebar: oklch(0.987 0.002 197.1);
-  --sidebar-foreground: oklch(0.148 0.004 228.8);
-  --sidebar-primary: oklch(0.558 0.288 302.321);
-  --sidebar-primary-foreground: oklch(0.977 0.014 308.299);
-  --sidebar-accent: oklch(0.963 0.002 197.1);
-  --sidebar-accent-foreground: oklch(0.218 0.008 223.9);
-  --sidebar-border: oklch(0.925 0.005 214.3);
-  --sidebar-ring: oklch(0.723 0.014 214.4);
-}
-
+/*
+  The product ships in one theme only. Everything below is the dark palette, so
+  `:root` and `.dark` resolve to the same values and no surface can fall back to
+  a light background.
+*/
+:root,
 .dark {
-  --background: oklch(0.148 0.004 228.8);
-  --foreground: oklch(0.987 0.002 197.1);
-  --card: oklch(0.218 0.008 223.9);
-  --card-foreground: oklch(0.987 0.002 197.1);
-  --popover: oklch(0.218 0.008 223.9);
-  --popover-foreground: oklch(0.987 0.002 197.1);
-  --primary: oklch(0.438 0.218 303.724);
-  --primary-foreground: oklch(0.977 0.014 308.299);
-  --secondary: oklch(0.274 0.006 286.033);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.275 0.011 216.9);
-  --muted-foreground: oklch(0.723 0.014 214.4);
-  --accent: oklch(0.275 0.011 216.9);
-  --accent-foreground: oklch(0.987 0.002 197.1);
-  --destructive: oklch(0.704 0.191 22.216);
-  --success: oklch(0.696 0.152 162.5);
-  --success-foreground: oklch(0.208 0.056 164.1);
+  --background: oklch(0.145 0.004 258);
+  --foreground: oklch(0.968 0.003 258);
+  --card: oklch(0.187 0.005 258);
+  --card-foreground: oklch(0.968 0.003 258);
+  --popover: oklch(0.203 0.006 258);
+  --popover-foreground: oklch(0.968 0.003 258);
+  --primary: oklch(0.606 0.223 303.2);
+  --primary-foreground: oklch(0.98 0.012 308.3);
+  --secondary: oklch(0.246 0.007 258);
+  --secondary-foreground: oklch(0.968 0.003 258);
+  --muted: oklch(0.232 0.006 258);
+  --muted-foreground: oklch(0.674 0.014 258);
+  --accent: oklch(0.262 0.008 258);
+  --accent-foreground: oklch(0.968 0.003 258);
+  --destructive: oklch(0.68 0.192 22.2);
+  --success: oklch(0.717 0.156 162.5);
+  --success-foreground: oklch(0.18 0.05 164.1);
   --info: oklch(0.678 0.158 254.9);
-  --info-foreground: oklch(0.21 0.055 258.3);
-  --warning: oklch(0.769 0.148 73.6);
-  --warning-foreground: oklch(0.242 0.062 68.7);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.56 0.021 213.5);
+  --info-foreground: oklch(0.19 0.05 258.3);
+  --warning: oklch(0.79 0.152 73.6);
+  --warning-foreground: oklch(0.22 0.06 68.7);
+  --border: oklch(1 0 0 / 9%);
+  --input: oklch(1 0 0 / 12%);
+  --ring: oklch(0.606 0.223 303.2 / 60%);
   --chart-1: oklch(0.827 0.119 306.383);
-  --chart-2: oklch(0.627 0.265 303.9);
-  --chart-3: oklch(0.558 0.288 302.321);
-  --chart-4: oklch(0.496 0.265 301.924);
+  --chart-2: oklch(0.706 0.208 303.9);
+  --chart-3: oklch(0.606 0.223 303.2);
+  --chart-4: oklch(0.523 0.244 302.3);
   --chart-5: oklch(0.438 0.218 303.724);
-  --sidebar: oklch(0.218 0.008 223.9);
-  --sidebar-foreground: oklch(0.987 0.002 197.1);
-  --sidebar-primary: oklch(0.627 0.265 303.9);
-  --sidebar-primary-foreground: oklch(0.977 0.014 308.299);
-  --sidebar-accent: oklch(0.275 0.011 216.9);
-  --sidebar-accent-foreground: oklch(0.987 0.002 197.1);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.56 0.021 213.5);
+  --radius: 0.55rem;
+  --sidebar: oklch(0.118 0.004 258);
+  --sidebar-foreground: oklch(0.968 0.003 258);
+  --sidebar-primary: oklch(0.606 0.223 303.2);
+  --sidebar-primary-foreground: oklch(0.98 0.012 308.3);
+  --sidebar-accent: oklch(0.232 0.006 258);
+  --sidebar-accent-foreground: oklch(0.968 0.003 258);
+  --sidebar-border: oklch(1 0 0 / 8%);
+  --sidebar-ring: oklch(0.606 0.223 303.2 / 60%);
 }
 
 
 @theme inline {
-  --shadow-card: 0px 5px 15px 0px rgb(0 0 0 / 0.08),
-    0px 15px 35px -5px rgb(0 0 0 / 0.20),
-    0px 0px 0px 1px rgb(0 0 0 / 0.07);
+  /* Depth on a dark canvas comes from a hairline plus a soft drop, not a glow. */
+  --shadow-card: 0px 1px 0px 0px rgb(255 255 255 / 0.04) inset,
+    0px 12px 32px -12px rgb(0 0 0 / 0.7),
+    0px 0px 0px 1px rgb(255 255 255 / 0.05);
 
-  --shadow-dialog:   0px 5px 15px 0px rgb(0 0 0 / 0.08),
-    0px 15px 35px -5px rgb(0 0 0 / 0.20),
-    0px 0px 0px 1px rgb(0 0 0 / 0.07);
+  --shadow-dialog: 0px 1px 0px 0px rgb(255 255 255 / 0.05) inset,
+    0px 24px 60px -18px rgb(0 0 0 / 0.85),
+    0px 0px 0px 1px rgb(255 255 255 / 0.07);
 }
 
 @layer base {
@@ -157,6 +124,20 @@
 
   html {
     @apply font-sans;
+    /* Native widgets (scrollbars, form controls) follow the single theme. */
+    color-scheme: dark;
+  }
+
+  ::selection {
+    background-color: color-mix(in oklch, var(--primary) 35%, transparent);
+    color: var(--foreground);
+  }
+
+  /* A thin scrollbar keeps long log and table views from feeling heavy. */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in oklch, var(--foreground) 18%, transparent)
+      transparent;
   }
 }
 
