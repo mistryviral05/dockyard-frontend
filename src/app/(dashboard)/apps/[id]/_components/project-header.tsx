@@ -3,6 +3,7 @@ import { ArrowLeft, ExternalLink } from "lucide-react"
 
 import { Button } from "@/shared/components/ui/button"
 import { Badge } from "@/shared/components/myui/badge"
+import { StackIcon } from "@/shared/components/myui/stack-icon"
 import { StatusBadge } from "@/shared/components/myui/status-badge"
 import { PROJECT_STACK_LABELS } from "@/features/project/schema"
 import type { ProjectDetail } from "@/features/project/types"
@@ -24,8 +25,9 @@ function ProjectHeader({ project }: { project: ProjectDetail }) {
 
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div className="flex items-start gap-4">
-          <span className="flex size-11 shrink-0 items-center justify-center rounded-full bg-muted text-sm font-semibold text-muted-foreground uppercase">
-            {project_name.slice(0, 2)}
+          {/* The same raised stack tile the project cards use, so the two views match. */}
+          <span className="flex size-11 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-secondary bg-linear-to-b from-white/4 to-transparent text-primary shadow-raised">
+            <StackIcon stack={project_stack} className="size-5.5" />
           </span>
 
           <div className="flex flex-col gap-2">

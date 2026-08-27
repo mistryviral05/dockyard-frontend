@@ -4,8 +4,8 @@ function ApplicationCardSkeleton() {
   return (
     // Mirrors the card layout, tile overhang included, so nothing jumps on load.
     <div className="relative pt-8">
-      <div className="flex flex-col items-center rounded-2xl border border-border/50 bg-card px-5 pt-12 pb-5 shadow-float">
-        <Skeleton className="absolute top-0 left-1/2 size-16 -translate-x-1/2 rounded-2xl" />
+      <div className="flex flex-col items-center rounded-3xl border border-border/50 bg-sidebar px-5 pt-12 pb-5">
+        <Skeleton className="absolute top-1 left-1/2 size-14 -translate-x-1/2 rounded-3xl" />
 
         <Skeleton className="h-5 w-32" />
         <Skeleton className="mt-2 h-4 w-20" />

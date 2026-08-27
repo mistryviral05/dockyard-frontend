@@ -133,6 +133,16 @@
     0px 1px 0px 0px rgb(255 255 255 / 0.06) inset;
 
   /*
+    The same lift on a light face. A white highlight is invisible there, so the
+    bottom edge and the outline carry the shape instead.
+  */
+  --shadow-raised-light: 0px 1px 0px 0px rgb(255 255 255 / 0.7) inset,
+    0px -2px 0px 0px rgb(0 0 0 / 0.22) inset,
+    0px 2px 3px 0px rgb(0 0 0 / 0.55);
+
+  --shadow-raised-light-sunken: 0px 2px 3px 0px rgb(0 0 0 / 0.28) inset;
+
+  /*
     A card that sits above the panel: lit top edge, a close contact shadow and
     a wide soft one underneath so it reads as a physical slab.
   */

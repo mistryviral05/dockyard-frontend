@@ -13,7 +13,7 @@ const buttonVariants = cva(
         // The main action is a white face with dark text. Yellow stays
         // reserved for state, so a primary button never competes with it.
         default:
-          "bg-foreground bg-linear-to-b from-white/40 to-transparent text-background shadow-raised hover:bg-[color-mix(in_oklch,var(--foreground),black_8%)] active:shadow-raised-sunken",
+          "border-black/25 bg-foreground bg-linear-to-b from-white/70 to-black/10 text-background shadow-raised-light hover:bg-[color-mix(in_oklch,var(--foreground),black_8%)] active:shadow-raised-light-sunken",
         outline:
           "border-border/50 bg-secondary bg-linear-to-b from-white/8 to-transparent text-secondary-foreground shadow-raised hover:bg-[color-mix(in_oklch,var(--secondary),white_6%)] aria-expanded:bg-accent active:shadow-raised-sunken",
         secondary:

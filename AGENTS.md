@@ -158,6 +158,36 @@ Follow `src/app/globals.css` tokens and Tailwind semantic colors (`bg-background
 `text-muted-foreground`, `border-border`) — no hardcoded hex or raw palette colors.
 Compose class names with `cn()` from `@/shared/lib/utils`.
 
+The app ships dark only. `:root` and `.dark` resolve to the same palette, so never add a
+light variant or a `dark:` prefixed class. Surface colors are fixed and must not be
+restyled while doing other work:
+
+- rail / sidebar → `bg-sidebar` (`#0c0a09`), same as the page canvas
+- content panel → `bg-panel` (`#151311`), flat, no gradient or wash over it
+- cards inside the panel → `bg-sidebar` or `bg-card`, with a `border-border/50` hairline
+
+Depth comes from the shadow tokens in `globals.css` (`shadow-raised`, `shadow-card`,
+`shadow-float`, `shadow-float-hover`) plus a thin `border-white/10` top edge and a
+`bg-linear-to-b from-white/4` sheen — not from glows or colored shadows. The yellow
+`primary` is reserved for meaning (active nav, focus ring, status, stack marks); primary
+buttons stay white.
+
+### 11. Decorative SVG
+Line art is how surfaces get texture, since the colors are fixed.
+
+- Marks live in `shared/components/myui/` as their own component (`stack-icon.tsx`,
+  `panel-pattern.tsx`), never inlined into a card or a page.
+- Draw on a 24 grid, `fill="none"`, `stroke="currentColor"`, `strokeWidth="1.5"`, round
+  caps and joins. Color is inherited, never set on the svg.
+- Every decorative svg gets `aria-hidden` and, when it sits over content,
+  `pointer-events-none`.
+- Background art is absolutely positioned behind the content at very low opacity
+  (`opacity-[0.045]`-ish) and fades out with a `maskImage` radial gradient. It adds line
+  work only — it must never change the surface color underneath it.
+- Project cards carry the stack mark twice: once in the raised tile, once blown up and
+  nearly invisible on the card face. Adding a stack to `PROJECT_STACKS` means adding its
+  mark to `stackPaths` in `stack-icon.tsx`.
+
 ## Checklist before writing any file
 
 1. Is this a route? → `app/.../page.tsx`, thin.

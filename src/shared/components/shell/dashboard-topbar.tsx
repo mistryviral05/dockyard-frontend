@@ -6,6 +6,8 @@ import { ChevronRight, Menu } from "lucide-react"
 
 import { Button } from "@/shared/components/ui/button"
 
+import { useBreadcrumbLabel } from "./use-breadcrumb-label"
+
 const sectionTitles: Record<string, string> = {
   apps: "Applications",
   agents: "Agents",
@@ -18,9 +20,10 @@ function DashboardTopbar({ onOpenMenu }: { onOpenMenu: () => void }) {
   // The first segment is the section, anything after it is a single record.
   const [section, detail] = pathname.split("/").filter(Boolean)
   const title = sectionTitles[section] ?? "Dashboard"
+  const detailLabel = useBreadcrumbLabel(section, detail)
 
   return (
-    <header className="flex h-18 shrink-0 items-center gap-3 px-4 sm:px-15">
+    <header className="relative flex h-18 shrink-0 items-center gap-3 px-4 sm:px-15">
       <Button
         variant="ghost"
         size="icon-sm"
@@ -47,11 +50,11 @@ function DashboardTopbar({ onOpenMenu }: { onOpenMenu: () => void }) {
           {title}
         </span>
 
-        {detail ? (
+        {detailLabel ? (
           <>
             <ChevronRight className="size-3.5 text-muted-foreground" />
             <span className="max-w-40 truncate font-medium sm:max-w-xs">
-              {detail}
+              {detailLabel}
             </span>
           </>
         ) : null}
