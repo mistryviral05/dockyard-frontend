@@ -10,9 +10,10 @@ const buttonVariants = cva(
       variant: {
         // The gradient sits on top of the solid colour, so the face reads as
         // lit from above while the inset shadows carve the edges.
-        // The accent is a light colour, so hover steps down rather than up.
+        // The main action is a white face with dark text. Yellow stays
+        // reserved for state, so a primary button never competes with it.
         default:
-          "bg-primary bg-linear-to-b from-white/25 to-transparent text-primary-foreground shadow-raised hover:bg-[color-mix(in_oklch,var(--primary),black_8%)] active:shadow-raised-sunken",
+          "bg-foreground bg-linear-to-b from-white/40 to-transparent text-background shadow-raised hover:bg-[color-mix(in_oklch,var(--foreground),black_8%)] active:shadow-raised-sunken",
         outline:
           "border-border bg-secondary bg-linear-to-b from-white/8 to-transparent text-secondary-foreground shadow-raised hover:bg-[color-mix(in_oklch,var(--secondary),white_6%)] aria-expanded:bg-accent active:shadow-raised-sunken",
         secondary:

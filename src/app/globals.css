@@ -68,11 +68,10 @@
     meaning (active nav, primary action, focus ring) is the only colour on
     the screen.
   */
-  --background: oklch(0 0 0);
+  --background: #0c0a09;
   --foreground: oklch(0.958 0 0);
-  /* The working surface carries a trace of the accent hue so it reads warm
-     against the pure black rail rather than flat grey. */
-  --panel: oklch(0.132 0.009 98);
+  /* Flat, one step above the rail. No wash over it. */
+  --panel: #151311;
   --card: oklch(0.176 0.008 98);
   --card-foreground: oklch(0.958 0 0);
   --popover: oklch(0.196 0.007 98);
@@ -92,8 +91,8 @@
   --info-foreground: oklch(0.19 0.05 258.3);
   --warning: oklch(0.79 0.152 73.6);
   --warning-foreground: oklch(0.22 0.06 68.7);
-  --border: oklch(0.278 0.006 98);
-  --input: oklch(0.31 0.006 98);
+  --border: oklch(0.352 0.005 98);
+  --input: oklch(0.372 0.005 98);
   --ring: oklch(0.9 0.175 98 / 45%);
   --chart-1: oklch(0.9 0.175 98);
   --chart-2: oklch(0.82 0.16 88);
@@ -101,13 +100,13 @@
   --chart-4: oklch(0.66 0.13 68);
   --chart-5: oklch(0.58 0.115 58);
   --radius: 0.5rem;
-  --sidebar: oklch(0 0 0);
+  --sidebar: #0c0a09;
   --sidebar-foreground: oklch(0.958 0 0);
   --sidebar-primary: oklch(0.9 0.175 98);
   --sidebar-primary-foreground: oklch(0.19 0.04 98);
   --sidebar-accent: oklch(0.226 0.006 98);
   --sidebar-accent-foreground: oklch(0.958 0 0);
-  --sidebar-border: oklch(0.24 0.006 98);
+  --sidebar-border: oklch(0.3 0.005 98);
   --sidebar-ring: oklch(0.9 0.175 98 / 45%);
 }
 
