@@ -23,7 +23,7 @@ function DashboardTopbar({ onOpenMenu }: { onOpenMenu: () => void }) {
   const detailLabel = useBreadcrumbLabel(section, detail)
 
   return (
-    <header className="relative flex h-18 shrink-0 items-center gap-3 px-4 sm:px-15">
+    <header className="relative flex h-18 shrink-0 items-center gap-3 px-4 sm:px-10">
       <Button
         variant="ghost"
         size="icon-sm"
