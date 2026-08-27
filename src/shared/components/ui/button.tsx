@@ -15,7 +15,7 @@ const buttonVariants = cva(
         default:
           "bg-foreground bg-linear-to-b from-white/40 to-transparent text-background shadow-raised hover:bg-[color-mix(in_oklch,var(--foreground),black_8%)] active:shadow-raised-sunken",
         outline:
-          "border-border bg-secondary bg-linear-to-b from-white/8 to-transparent text-secondary-foreground shadow-raised hover:bg-[color-mix(in_oklch,var(--secondary),white_6%)] aria-expanded:bg-accent active:shadow-raised-sunken",
+          "border-border/50 bg-secondary bg-linear-to-b from-white/8 to-transparent text-secondary-foreground shadow-raised hover:bg-[color-mix(in_oklch,var(--secondary),white_6%)] aria-expanded:bg-accent active:shadow-raised-sunken",
         secondary:
           "bg-secondary bg-linear-to-b from-white/8 to-transparent text-secondary-foreground shadow-raised hover:bg-[color-mix(in_oklch,var(--secondary),white_6%)] aria-expanded:bg-accent active:shadow-raised-sunken",
         ghost:
