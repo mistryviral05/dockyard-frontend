@@ -1,22 +1,23 @@
 import { UserButton } from "@clerk/nextjs"
 
 import { BackButton } from "./back-button"
+import { NewProjectSteps } from "./new-project-steps"
 
 function NewProjectNavbar() {
   return (
-    <header className="w-full border-b border-border bg-sidebar">
-      <div className="grid h-14 grid-cols-3 items-center px-4 sm:px-6">
-        <div className="flex justify-start">
-          <BackButton />
-        </div>
+    // No border, the panel edge already separates this from the canvas.
+    <header className="relative w-full shrink-0">
+      <div className="grid h-16 grid-cols-[auto_1fr_auto] items-center gap-3 px-4 sm:px-8">
+        <BackButton />
 
         <div className="flex justify-center">
-          <span className="text-sm font-semibold">New project</span>
+          <span className="text-sm font-medium sm:hidden">New project</span>
+          <div className="hidden sm:block">
+            <NewProjectSteps />
+          </div>
         </div>
 
-        <div className="flex justify-end">
-          <UserButton />
-        </div>
+        <UserButton />
       </div>
     </header>
   )

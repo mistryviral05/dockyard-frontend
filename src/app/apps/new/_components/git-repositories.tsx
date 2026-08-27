@@ -1,9 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { GitBranch, Lock, Search } from "lucide-react"
+import { FolderGit2, Lock, Search } from "lucide-react"
 
-import { Button } from "@/shared/components/ui/button"
 import {
   Card,
   CardContent,
@@ -13,12 +12,12 @@ import {
 import { Input } from "@/shared/components/ui/input"
 import { format } from 'date-fns'
 import { AccountSwitcher } from "./account-switcher"
+import { GithubIcon } from "./github-icon"
 import { GithubInstallation, GithubRepository } from "@/features/github/types"
 import { githubQueries } from "@/features/github/useGithubQueries"
 import { useGithubAccStore } from "@/store/useGithubInstallation"
 import { ReposSkeleton } from "./git-repositories-skeleton"
 import { useRouter, useSearchParams } from "next/navigation"
-
 
 
 
@@ -47,10 +46,31 @@ function GitRepositories({ installations }: { installations: GithubInstallation[
   }
 
   return (
-    <Card className="w-full max-w-xl">
+    <Card className="w-full max-w-xl rounded-3xl shadow-float">
       <CardHeader>
-        <CardTitle className="text-lg">Import Git Repository</CardTitle>
-        <div className="mt-3 flex flex-col gap-2 sm:flex-row">
+        <div className="flex items-start justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <span className="flex size-9 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-secondary bg-linear-to-b from-white/8 to-transparent shadow-raised">
+              <GithubIcon className="size-4" />
+            </span>
+
+            <div>
+              <CardTitle className="text-base">Import a repository</CardTitle>
+              <p className="mt-0.5 text-xs text-muted-foreground">
+                Pick the one you want to deploy
+              </p>
+            </div>
+          </div>
+
+          {/* A count makes the list feel finite while the search narrows it. */}
+          {!isLoading && filtered ? (
+            <span className="rounded-full border border-border/60 px-2.5 py-1 font-mono text-xs text-muted-foreground">
+              {filtered.length}
+            </span>
+          ) : null}
+        </div>
+
+        <div className="mt-4 flex flex-col gap-2 sm:flex-row">
           <div className="sm:w-52">
             <AccountSwitcher installations={installations} />
           </div>
@@ -70,38 +90,50 @@ function GitRepositories({ installations }: { installations: GithubInstallation[
       <CardContent className="px-0">
         {
           isLoading ? <ReposSkeleton /> :
-            <ul className="divide-y divide-border border-t border-border max-h-100 overflow-y-auto">
+            <ul className="max-h-100 divide-y divide-border/40 overflow-y-auto border-t border-border/40">
               {filtered?.map((repo) => (
-                <li
-                  key={repo.repo_id}
-                  className="flex items-center justify-between gap-3 px-6 py-3 hover:bg-muted/60 transition-all duration-200 ease-in-out "
-                >
-                  <div className="flex min-w-0 items-center gap-3">
-                    <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-muted text-muted-foreground">
-                      <GitBranch className="size-4" />
-                    </span>
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-1.5">
-                        <p className="truncate text-sm font-medium">{repo.repo_name}</p>
-                        {repo.is_private && (
-                          <Lock className="size-3 shrink-0 text-muted-foreground" />
-                        )}
+                <li key={repo.repo_id}>
+                  {/*
+                    The whole row is the target, the label on the right just
+                    fills in on hover so the intent stays obvious.
+                  */}
+                  <button
+                    type="button"
+                    onClick={() => handleImport(repo)}
+                    className="group flex w-full cursor-pointer items-center justify-between gap-3 px-6 py-3 text-left outline-none transition-colors duration-200 hover:bg-muted/50 focus-visible:bg-muted/50"
+                  >
+                    <div className="flex min-w-0 items-center gap-3">
+                      <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-muted text-muted-foreground transition-colors group-hover:text-foreground">
+                        <FolderGit2 className="size-4" />
+                      </span>
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-1.5">
+                          <p className="truncate text-sm font-medium">{repo.repo_name}</p>
+                          {repo.is_private && (
+                            <Lock className="size-3 shrink-0 text-muted-foreground" />
+                          )}
+                        </div>
+                        <p className="text-xs text-muted-foreground">
+                          {format(repo.last_updated_at, "MMM dd, yyyy")}
+                        </p>
                       </div>
-                      <p className="text-xs text-muted-foreground">
-                        {format(repo.last_updated_at, "MMM dd, yyyy")}
-                      </p>
                     </div>
-                  </div>
 
-                  <Button size="sm" onClick={() => handleImport(repo)}>
-                    Import
-                  </Button>
+                    <span className="shrink-0 rounded-md border border-border/50 px-3 py-1.5 text-xs font-medium text-muted-foreground transition-colors group-hover:border-transparent group-hover:bg-foreground group-hover:text-background">
+                      Import
+                    </span>
+                  </button>
                 </li>
               ))}
 
               {filtered?.length === 0 && (
-                <li className="px-6 py-10 text-center text-sm text-muted-foreground">
-                  No repositories found.
+                <li className="flex flex-col items-center gap-2 px-6 py-12 text-center">
+                  <span className="flex size-10 items-center justify-center rounded-xl bg-muted text-muted-foreground">
+                    <Search className="size-4" />
+                  </span>
+                  <p className="text-sm text-muted-foreground">
+                    No repositories match that search
+                  </p>
                 </li>
               )}
             </ul>
