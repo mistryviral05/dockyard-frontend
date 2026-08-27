@@ -6,7 +6,7 @@ function LandingFreeAccess() {
   return (
     <section id="pricing" className="border-b border-border">
       <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
-        <div className="flex flex-col items-center gap-6 rounded-2xl border border-border bg-card px-6 py-12 text-center">
+        <div className="flex flex-col items-center gap-6 rounded-xl border border-border bg-card px-6 py-12 text-center">
           <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
             <Sparkles className="size-3.5" />
             Early access

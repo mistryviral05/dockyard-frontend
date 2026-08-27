@@ -8,13 +8,13 @@ function SidebarUserCard() {
   const { isLoaded, user } = useUser()
 
   if (!isLoaded) {
-    return <Skeleton className="h-14 w-full rounded-lg" />
+    return <Skeleton className="h-14 w-full rounded-md" />
   }
 
   if (!user) return null
 
   return (
-    <div className="flex items-center gap-3 rounded-lg border border-sidebar-border bg-sidebar-accent/50 px-3 py-2.5">
+    <div className="flex items-center gap-3 rounded-md border border-sidebar-border bg-sidebar-accent/50 px-3 py-2.5">
       <UserButton signInUrl="/sign-in" />
 
       <div className="flex min-w-0 flex-col">

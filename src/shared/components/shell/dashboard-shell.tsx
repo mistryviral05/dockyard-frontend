@@ -7,20 +7,25 @@ import { AppSidebar } from "@/shared/components/sidebar/app-sidebar"
 import { DashboardTopbar } from "./dashboard-topbar"
 
 /**
- * Owns the one piece of state the rail and the top bar share: whether the
- * mobile menu is open.
+ * The rail sits on the black canvas and the content lives in a rounded panel
+ * inset from the edges, so the two surfaces stay visually separate. Only the
+ * panel scrolls, which keeps the rail and the breadcrumb in place.
  */
 function DashboardShell({ children }: { children: React.ReactNode }) {
   const [menuOpen, setMenuOpen] = useState(false)
 
   return (
-    <div className="flex min-h-dvh w-full bg-background">
+    <div className="flex h-dvh w-full overflow-hidden bg-background">
       <AppSidebar open={menuOpen} onOpenChange={setMenuOpen} />
 
-      <div className="flex min-w-0 flex-1 flex-col">
-        <DashboardTopbar onOpenMenu={() => setMenuOpen(true)} />
+      <div className="flex min-w-0 flex-1 p-2 lg:py-3 lg:pr-3 lg:pl-0">
+        <div className="flex min-w-0 flex-1 flex-col overflow-hidden rounded-xl border border-border bg-panel">
+          <DashboardTopbar onOpenMenu={() => setMenuOpen(true)} />
 
-        <main className="flex-1 px-4 py-6 sm:px-6 lg:px-8">{children}</main>
+          <main className="flex-1 overflow-y-auto px-4 py-6 sm:px-6 lg:px-8">
+            {children}
+          </main>
+        </div>
       </div>
     </div>
   )

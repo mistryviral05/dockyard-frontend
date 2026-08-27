@@ -10,7 +10,7 @@ function LandingFeatureCard({
   description: string
 }) {
   return (
-    <div className="flex flex-col gap-3 rounded-2xl border border-border bg-card p-6">
+    <div className="flex flex-col gap-3 rounded-xl border border-border bg-card p-6">
       <span className="flex size-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
         <Icon className="size-4.5" />
       </span>

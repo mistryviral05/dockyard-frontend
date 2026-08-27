@@ -31,20 +31,14 @@ function SidebarNavItem({
       onClick={onNavigate}
       data-active={isActive}
       className={cn(
-        "group relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground outline-none transition-colors",
-        "hover:bg-sidebar-accent/70 hover:text-sidebar-accent-foreground",
-        "focus-visible:bg-sidebar-accent/70 focus-visible:text-sidebar-accent-foreground",
-        "data-[active=true]:bg-sidebar-accent data-[active=true]:text-sidebar-accent-foreground"
+        // The current item is marked with colour alone. Only hover and focus
+        // paint a background, so the rail stays quiet while you read it.
+        "group relative flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground outline-none transition-colors",
+        "hover:bg-muted hover:text-foreground",
+        "focus-visible:bg-muted focus-visible:text-foreground",
+        "data-[active=true]:text-primary"
       )}
     >
-      {/* A short bar on the edge marks the current section without shouting. */}
-      <span
-        aria-hidden
-        className={cn(
-          "absolute top-1/2 -left-2 h-5 w-0.5 -translate-y-1/2 rounded-full bg-primary opacity-0 transition-opacity",
-          "group-data-[active=true]:opacity-100"
-        )}
-      />
       <Icon className="size-4 shrink-0 text-muted-foreground transition-colors group-data-[active=true]:text-primary group-hover:text-foreground" />
       <span className="truncate">{item.label}</span>
     </Link>

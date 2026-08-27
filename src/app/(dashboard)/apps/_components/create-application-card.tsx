@@ -9,7 +9,7 @@ function CreateApplicationCard({ className }: { className?: string }) {
       <button
         type="button"
         className={cn(
-          "group flex min-h-50 w-full flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-border bg-border/20 text-muted-foreground transition-colors outline-none hover:border-primary/30 hover:bg-muted/40 hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background cursor-pointer",
+          "group flex min-h-50 w-full flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-border bg-border/20 text-muted-foreground transition-colors outline-none hover:border-primary/30 hover:bg-muted/40 hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background cursor-pointer",
           className
         )}
       >

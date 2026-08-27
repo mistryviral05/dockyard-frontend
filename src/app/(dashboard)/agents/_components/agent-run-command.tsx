@@ -28,7 +28,7 @@ function AgentRunCommand({
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="flex items-start gap-2 rounded-2xl bg-muted p-3">
+      <div className="flex items-start gap-2 rounded-xl bg-muted p-3">
         <code className="min-w-0 flex-1 font-mono text-xs leading-relaxed break-all text-foreground">
           {command}
         </code>

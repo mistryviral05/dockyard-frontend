@@ -20,10 +20,10 @@ function AppSidebar({
 }) {
   return (
     <>
-      <aside className="hidden w-64 shrink-0 border-r border-sidebar-border bg-sidebar lg:block">
-        <div className="sticky top-0 h-dvh">
-          <SidebarContent />
-        </div>
+      {/* On the canvas the rail needs no border: the content panel edge reads
+          as the divider. */}
+      <aside className="hidden h-full w-64 shrink-0 bg-sidebar lg:block">
+        <SidebarContent />
       </aside>
 
       <div

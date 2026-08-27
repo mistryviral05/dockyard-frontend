@@ -8,7 +8,7 @@ function LandingWorkflowStep({
   description: string
 }) {
   return (
-    <div className="flex flex-col gap-3 rounded-2xl border border-border bg-card p-6">
+    <div className="flex flex-col gap-3 rounded-xl border border-border bg-card p-6">
       <span className="flex size-8 items-center justify-center rounded-full border border-border bg-muted font-mono text-sm font-medium text-muted-foreground">
         {step}
       </span>

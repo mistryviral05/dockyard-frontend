@@ -13,7 +13,7 @@ function LandingNav() {
   return (
     // The bar floats over the hero instead of spanning the full width.
     <header className="sticky top-0 z-10 w-full px-4 pt-4 sm:px-6">
-      <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 rounded-2xl border border-border bg-card/70 px-4 py-2.5 shadow-card backdrop-blur-xl sm:px-5">
+      <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 rounded-xl border border-border bg-card/70 px-4 py-2.5 shadow-card backdrop-blur-xl sm:px-5">
         <div className="flex items-center gap-6">
           <Link href="/" className="flex items-center gap-2">
             <span className="flex size-7 items-center justify-center rounded-lg bg-primary text-primary-foreground">

@@ -96,7 +96,7 @@ function CreateAgentDialog({
             </DialogDescription>
           </DialogHeader>
 
-          <div className="flex items-start gap-2 rounded-2xl bg-destructive/10 p-3 text-xs text-destructive">
+          <div className="flex items-start gap-2 rounded-xl bg-destructive/10 p-3 text-xs text-destructive">
             <TriangleAlert className="mt-px size-4 shrink-0" />
             <p>
               This command is shown only once. If it expires or you lose it,

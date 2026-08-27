@@ -31,7 +31,7 @@ function ApplicationsGrid() {
 
   if (isError) {
     return (
-      <div className="rounded-2xl border border-border bg-background px-6 py-16 text-center text-sm text-muted-foreground">
+      <div className="rounded-xl border border-border bg-background px-6 py-16 text-center text-sm text-muted-foreground">
         Could not load your projects. Please try again.
       </div>
     )

@@ -32,7 +32,7 @@ function DeploymentDetailSkeleton() {
 
         <div className="flex flex-col gap-4">
           <Skeleton className="h-5 w-20" />
-          <div className="rounded-2xl bg-muted p-1.5">
+          <div className="rounded-xl bg-muted p-1.5">
             <div className="flex flex-col gap-2 rounded-xl border border-border bg-background px-4 py-3">
               {Array.from({ length: 10 }).map((_, index) => (
                 <Skeleton key={index} className="h-3.5 w-full" />

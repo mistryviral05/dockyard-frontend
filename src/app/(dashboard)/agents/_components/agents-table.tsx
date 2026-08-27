@@ -20,7 +20,7 @@ function AgentsTable() {
 
   if (isLoading) {
     return (
-      <div className="rounded-2xl bg-muted p-1.5">
+      <div className="rounded-xl bg-muted p-1.5">
         <AgentsTableSkeleton />
       </div>
     )
@@ -28,7 +28,7 @@ function AgentsTable() {
 
   if (isError) {
     return (
-      <div className="rounded-2xl bg-muted p-1.5">
+      <div className="rounded-xl bg-muted p-1.5">
         <div className="rounded-xl border border-border bg-background px-6 py-16 text-center text-sm text-muted-foreground">
           Could not load your agents. Please try again.
         </div>
@@ -38,14 +38,14 @@ function AgentsTable() {
 
   if (!agents || agents.length === 0) {
     return (
-      <div className="rounded-2xl bg-muted p-1.5">
+      <div className="rounded-xl bg-muted p-1.5">
         <AgentsEmptyState />
       </div>
     )
   }
 
   return (
-    <div className="rounded-2xl bg-muted p-1.5">
+    <div className="rounded-xl bg-muted p-1.5">
       <Table className="border-separate border-spacing-0">
         <TableHeader>
           <TableRow className="border-0 hover:bg-transparent">

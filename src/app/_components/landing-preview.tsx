@@ -19,7 +19,7 @@ const toneStyles = {
 
 function LandingPreview() {
   return (
-    <div className="mx-auto w-full max-w-4xl rounded-2xl border border-border bg-card/60 p-1.5 shadow-card">
+    <div className="mx-auto w-full max-w-4xl rounded-xl border border-border bg-card/60 p-1.5 shadow-card">
       <div className="overflow-hidden rounded-xl border border-border bg-background">
         <div className="flex items-center gap-2 border-b border-border px-4 py-3">
           <span className="size-2.5 rounded-full bg-destructive/40" />

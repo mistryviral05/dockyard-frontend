@@ -25,7 +25,7 @@ function ProjectDeploymentsTable({
 }) {
   if (isLoading) {
     return (
-      <div className="rounded-2xl bg-muted p-1.5">
+      <div className="rounded-xl bg-muted p-1.5">
         <div className="rounded-xl border border-border bg-background">
           {Array.from({ length: 3 }).map((_, index) => (
             <div
@@ -45,14 +45,14 @@ function ProjectDeploymentsTable({
 
   if (deployments.length === 0) {
     return (
-      <div className="rounded-2xl bg-muted p-1.5">
+      <div className="rounded-xl bg-muted p-1.5">
         <ProjectDeploymentsEmptyState />
       </div>
     )
   }
 
   return (
-    <div className="rounded-2xl bg-muted p-1.5">
+    <div className="rounded-xl bg-muted p-1.5">
       <Table className="border-separate border-spacing-0">
         <TableHeader>
           <TableRow className="border-0 hover:bg-transparent">

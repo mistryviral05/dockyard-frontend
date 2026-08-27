@@ -38,7 +38,7 @@ function ProjectDetailSkeleton() {
 
       <div className="flex flex-col gap-4">
         <Skeleton className="h-5 w-28" />
-        <div className="rounded-2xl bg-muted p-1.5">
+        <div className="rounded-xl bg-muted p-1.5">
           <div className="rounded-xl border border-border bg-background">
             {Array.from({ length: 3 }).map((_, index) => (
               <div
