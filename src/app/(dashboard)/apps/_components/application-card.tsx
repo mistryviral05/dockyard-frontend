@@ -21,9 +21,9 @@ function ApplicationCard({ project }: { project: Project }) {
         className="absolute inset-x-5 -bottom-1.5 h-12 rounded-2xl bg-foreground/6 transition-all duration-300 ease-out group-hover:inset-x-3 group-hover:-bottom-2.5"
       />
 
-      <div className="relative flex h-full flex-col items-center rounded-2xl border border-border/50 bg-sidebar px-5 pt-12 pb-5 text-center  transition-all duration-300 ease-out group-hover:-translate-y-1 group-hover:border-border/50  group-focus-visible:ring-3 group-focus-visible:ring-ring/40">
+      <div className="relative flex h-full flex-col items-center rounded-3xl border border-border/50 bg-sidebar px-5 pt-12 pb-5 text-center  transition-all duration-300 ease-out group-hover:-translate-y-1 group-hover:border-border/50  group-focus-visible:ring-3 group-focus-visible:ring-ring/40">
         {/* The identity tile, raised on its own so it sits above the card face. */}
-        <span className="absolute -top-8 left-1/2 flex size-16 -translate-x-1/2 items-center justify-center rounded-2xl border border-white/10 bg-secondary bg-linear-to-b from-white/4 to-transparent text-lg font-semibold text-primary uppercase shadow-raised transition-transform duration-300 ease-out group-hover:-translate-y-0.5">
+        <span className="absolute -top-8 left-1/2 flex size-14 -translate-x-1/2 items-center justify-center rounded-3xl border border-white/10 bg-secondary bg-linear-to-b from-white/4 to-transparent text-lg font-semibold text-primary uppercase shadow-raised transition-transform duration-300 ease-out group-hover:-translate-y-0.5">
           {project_name.slice(0, 2)}
         </span>
 
