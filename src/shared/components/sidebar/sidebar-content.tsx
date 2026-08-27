@@ -46,9 +46,12 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
         ))}
       </nav>
 
+      <div className="px-3 mt-auto">
+
       {/* A rule separates the account block from the navigation above it. */}
-      <div className="mt-auto border-t border-sidebar-border pt-4 px-3">
+      <div className=" pt-4">
         <SidebarUserCard />
+      </div>
       </div>
     </div>
   )
