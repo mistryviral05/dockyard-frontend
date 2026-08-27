@@ -15,7 +15,7 @@ function SidebarUserCard() {
 
   return (
     // Same raised face as the buttons, so the account block reads as pressable.
-    <div className="flex items-center gap-3 rounded-md border border-sidebar-border bg-secondary bg-linear-to-b from-white/8 to-transparent px-3 py-2.5 shadow-raised">
+    <div className="flex items-center gap-3 rounded-xl border border-sidebar-border/50 bg-secondary/50 bg-linear-to-b from-white/1 to-transparent px-3 py-2.5 shadow-raised">
       <UserButton signInUrl="/sign-in" />
 
       <div className="flex min-w-0 flex-col">

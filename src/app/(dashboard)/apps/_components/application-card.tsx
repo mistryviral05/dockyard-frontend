@@ -19,9 +19,9 @@ function ApplicationCard({ project }: { project: Project }) {
   return (
     <Link
       href={`/apps/${id}`}
-      className="group rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+      className="group  outline-none "
     >
-      <Card className="h-full gap-0 py-0 transition-colors group-hover:border-primary/30">
+      <Card className="h-full gap-0 py-0 transition-colors">
         <CardHeader className="flex items-start justify-between gap-3 pt-6">
           <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-muted text-xs font-semibold text-muted-foreground uppercase">
             {project_name.slice(0, 2)}

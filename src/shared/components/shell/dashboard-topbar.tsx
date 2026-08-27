@@ -20,7 +20,7 @@ function DashboardTopbar({ onOpenMenu }: { onOpenMenu: () => void }) {
   const title = sectionTitles[section] ?? "Dashboard"
 
   return (
-    <header className="flex h-14 shrink-0 items-center gap-3 px-4 sm:px-6">
+    <header className="flex h-18 shrink-0 items-center gap-3 px-4 sm:px-15">
       <Button
         variant="ghost"
         size="icon-sm"

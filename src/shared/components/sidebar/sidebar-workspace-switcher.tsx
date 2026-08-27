@@ -44,7 +44,7 @@ function SidebarWorkspaceSwitcher() {
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger className="flex w-full cursor-pointer items-center gap-3 rounded-md border border-sidebar-border bg-secondary bg-linear-to-b from-white/8 to-transparent px-3 py-2 text-left shadow-raised outline-none transition-colors hover:bg-[color-mix(in_oklch,var(--secondary),white_6%)] focus-visible:ring-3 focus-visible:ring-ring/30 aria-expanded:bg-accent">
+        <DropdownMenuTrigger className="flex w-full cursor-pointer items-center gap-3 rounded-xl border border-sidebar-border/80 bg-secondary/80 bg-linear-to-b from-white/1 to-transparent px-3 py-2 text-left shadow-raised outline-none transition-colors hover:bg-[color-mix(in_oklch,var(--secondary),white_2%)] focus-visible:ring-3 focus-visible:ring-ring/30 aria-expanded:bg-accent">
           <span className="flex size-7 shrink-0 items-center justify-center rounded-md bg-background text-muted-foreground">
             <FolderKanban className="size-4" />
           </span>
@@ -62,7 +62,7 @@ function SidebarWorkspaceSwitcher() {
         <DropdownMenuContent align="start" className="min-w-64">
           <DropdownMenuGroup>
             <DropdownMenuLabel>Workspaces</DropdownMenuLabel>
-
+            
             {workspaces?.map((workspace) => (
               <DropdownMenuItem
                 key={workspace.id}
