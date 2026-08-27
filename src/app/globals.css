@@ -62,21 +62,28 @@
 */
 :root,
 .dark {
-  /* Surfaces are neutral greys stacked on a black canvas. */
+  /*
+    Black canvas, neutral greys stacked on top, and one warm accent. The
+    accent is the yellow from the reference palette, so anything that carries
+    meaning (active nav, primary action, focus ring) is the only colour on
+    the screen.
+  */
   --background: oklch(0 0 0);
   --foreground: oklch(0.958 0 0);
-  --panel: oklch(0.113 0 0);
-  --card: oklch(0.163 0 0);
+  /* The working surface carries a trace of the accent hue so it reads warm
+     against the pure black rail rather than flat grey. */
+  --panel: oklch(0.132 0.009 98);
+  --card: oklch(0.176 0.008 98);
   --card-foreground: oklch(0.958 0 0);
-  --popover: oklch(0.186 0 0);
+  --popover: oklch(0.196 0.007 98);
   --popover-foreground: oklch(0.958 0 0);
-  --primary: oklch(0.606 0.223 303.2);
-  --primary-foreground: oklch(0.98 0.012 308.3);
-  --secondary: oklch(0.238 0 0);
+  --primary: oklch(0.9 0.175 98);
+  --primary-foreground: oklch(0.19 0.04 98);
+  --secondary: oklch(0.246 0.006 98);
   --secondary-foreground: oklch(0.958 0 0);
-  --muted: oklch(0.219 0 0);
-  --muted-foreground: oklch(0.632 0 0);
-  --accent: oklch(0.252 0 0);
+  --muted: oklch(0.226 0.006 98);
+  --muted-foreground: oklch(0.647 0.008 98);
+  --accent: oklch(0.262 0.007 98);
   --accent-foreground: oklch(0.958 0 0);
   --destructive: oklch(0.68 0.192 22.2);
   --success: oklch(0.717 0.156 162.5);
@@ -85,23 +92,23 @@
   --info-foreground: oklch(0.19 0.05 258.3);
   --warning: oklch(0.79 0.152 73.6);
   --warning-foreground: oklch(0.22 0.06 68.7);
-  --border: oklch(0.272 0 0);
-  --input: oklch(0.302 0 0);
-  --ring: oklch(0.606 0.223 303.2 / 60%);
-  --chart-1: oklch(0.827 0.119 306.383);
-  --chart-2: oklch(0.706 0.208 303.9);
-  --chart-3: oklch(0.606 0.223 303.2);
-  --chart-4: oklch(0.523 0.244 302.3);
-  --chart-5: oklch(0.438 0.218 303.724);
+  --border: oklch(0.278 0.006 98);
+  --input: oklch(0.31 0.006 98);
+  --ring: oklch(0.9 0.175 98 / 45%);
+  --chart-1: oklch(0.9 0.175 98);
+  --chart-2: oklch(0.82 0.16 88);
+  --chart-3: oklch(0.74 0.145 78);
+  --chart-4: oklch(0.66 0.13 68);
+  --chart-5: oklch(0.58 0.115 58);
   --radius: 0.5rem;
   --sidebar: oklch(0 0 0);
   --sidebar-foreground: oklch(0.958 0 0);
-  --sidebar-primary: oklch(0.606 0.223 303.2);
-  --sidebar-primary-foreground: oklch(0.98 0.012 308.3);
-  --sidebar-accent: oklch(0.219 0 0);
+  --sidebar-primary: oklch(0.9 0.175 98);
+  --sidebar-primary-foreground: oklch(0.19 0.04 98);
+  --sidebar-accent: oklch(0.226 0.006 98);
   --sidebar-accent-foreground: oklch(0.958 0 0);
-  --sidebar-border: oklch(0.235 0 0);
-  --sidebar-ring: oklch(0.606 0.223 303.2 / 60%);
+  --sidebar-border: oklch(0.24 0.006 98);
+  --sidebar-ring: oklch(0.9 0.175 98 / 45%);
 }
 
 

@@ -19,7 +19,9 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
       <AppSidebar open={menuOpen} onOpenChange={setMenuOpen} />
 
       <div className="flex min-w-0 flex-1 p-2 lg:py-3 lg:pr-3 lg:pl-0">
-        <div className="flex min-w-0 flex-1 flex-col overflow-hidden rounded-xl border border-border bg-panel">
+        {/* A faint accent wash over the panel keeps the working area warm
+            instead of flat grey. */}
+        <div className="flex min-w-0 flex-1 flex-col overflow-hidden rounded-xl border border-border bg-panel bg-linear-to-b from-primary/5 to-transparent to-60%">
           <DashboardTopbar onOpenMenu={() => setMenuOpen(true)} />
 
           <main className="flex-1 overflow-y-auto px-4 py-6 sm:px-6 lg:px-8">

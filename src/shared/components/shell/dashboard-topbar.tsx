@@ -1,7 +1,8 @@
 "use client"
 
+import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Menu } from "lucide-react"
+import { ChevronRight, Menu } from "lucide-react"
 
 import { Button } from "@/shared/components/ui/button"
 
@@ -30,14 +31,25 @@ function DashboardTopbar({ onOpenMenu }: { onOpenMenu: () => void }) {
         <Menu />
       </Button>
 
+      {/* The trail always starts at the dashboard, so the current section
+          reads as a place inside it rather than the whole app. */}
       <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-sm">
+        <Link
+          href="/apps"
+          className="text-muted-foreground transition-colors hover:text-foreground"
+        >
+          Dashboard
+        </Link>
+
+        <ChevronRight className="size-3.5 text-muted-foreground" />
+
         <span className={detail ? "text-muted-foreground" : "font-medium"}>
           {title}
         </span>
 
         {detail ? (
           <>
-            <span className="text-muted-foreground">/</span>
+            <ChevronRight className="size-3.5 text-muted-foreground" />
             <span className="max-w-40 truncate font-medium sm:max-w-xs">
               {detail}
             </span>

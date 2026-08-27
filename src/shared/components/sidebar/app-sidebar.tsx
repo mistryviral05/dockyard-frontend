@@ -22,7 +22,7 @@ function AppSidebar({
     <>
       {/* On the canvas the rail needs no border: the content panel edge reads
           as the divider. */}
-      <aside className="hidden h-full w-64 shrink-0 bg-sidebar lg:block">
+      <aside className="hidden h-full w-72 shrink-0 bg-sidebar lg:block">
         <SidebarContent />
       </aside>
 
@@ -37,7 +37,7 @@ function AppSidebar({
 
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-50 w-64 border-r border-sidebar-border bg-sidebar transition-transform lg:hidden",
+          "fixed inset-y-0 left-0 z-50 w-72 border-r border-sidebar-border bg-sidebar transition-transform lg:hidden",
           open ? "translate-x-0" : "-translate-x-full"
         )}
       >
