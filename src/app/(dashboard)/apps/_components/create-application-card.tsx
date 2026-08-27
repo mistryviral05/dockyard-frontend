@@ -10,7 +10,7 @@ function CreateApplicationCard({ className }: { className?: string }) {
       href="/apps/new"
       className={cn("group relative block pt-8 outline-none", className)}
     >
-      <div className="flex h-full min-h-46 flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-border bg-foreground/2 text-muted-foreground transition-colors duration-300 group-hover:border-primary/40 group-hover:bg-foreground/4 group-hover:text-foreground group-focus-visible:ring-3 group-focus-visible:ring-ring/40">
+      <div className="flex h-full min-h-46 flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-border/50 bg-secondary/50 text-muted-foreground transition-colors duration-300 group-hover:border-primary/40 group-hover:bg-foreground/4 group-hover:text-foreground group-focus-visible:ring-3 group-focus-visible:ring-ring/40">
         <span className="flex size-11 items-center justify-center rounded-2xl border border-white/10 bg-secondary bg-linear-to-b from-white/14 to-transparent text-primary shadow-raised transition-transform duration-300 ease-out group-hover:-translate-y-0.5">
           <Plus className="size-5" />
         </span>
