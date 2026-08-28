@@ -46,11 +46,11 @@ function GitRepositories({ installations }: { installations: GithubInstallation[
   }
 
   return (
-    <Card className="w-full max-w-xl rounded-3xl shadow-float">
+    <Card className="w-full max-w-xl rounded-3xl ">
       <CardHeader>
         <div className="flex items-start justify-between gap-3">
           <div className="flex items-center gap-3">
-            <span className="flex size-9 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-secondary bg-linear-to-b from-white/8 to-transparent shadow-raised">
+            <span className="flex size-9 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-secondary bg-linear-to-b from-white/8 to-transparent">
               <GithubIcon className="size-4" />
             </span>
 

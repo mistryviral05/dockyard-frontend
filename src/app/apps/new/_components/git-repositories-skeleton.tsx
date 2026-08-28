@@ -31,7 +31,7 @@ function ReposSkeleton() {
 
 function GitRepositoriesSkeleton() {
   return (
-    <Card className="w-full max-w-xl rounded-3xl shadow-float">
+    <Card className="w-full max-w-xl rounded-3xl">
       <CardHeader>
         <div className="flex items-center gap-3">
           <Skeleton className="size-9 rounded-xl" />

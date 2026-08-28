@@ -109,11 +109,11 @@ export default function ImportPage() {
     }
 
     return (
-        <Card className="w-full max-w-2xl rounded-3xl shadow-float">
+        <Card className="w-full max-w-2xl rounded-3xl">
             <CardHeader>
                 <div className="flex items-center gap-3">
                     {/* The same raised tile the project cards use, one step earlier. */}
-                    <span className="flex size-10 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-secondary bg-linear-to-b from-white/8 to-transparent shadow-raised">
+                    <span className="flex size-10 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-secondary bg-linear-to-b from-white/8 to-transparent">
                         <GithubIcon className="size-4.5" />
                     </span>
 
