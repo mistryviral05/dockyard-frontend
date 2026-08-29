@@ -76,7 +76,7 @@ function ProjectDeploymentsTable({
         </TableHeader>
 
         <TableBody
-             className=" [&_td]:border-border/40 [&_td]:bg-secondary
+          className=" [&_td]:border-border/40 bg-secondary
             [&_tr:first-child_td:first-child]:rounded-tl-xl
             [&_tr:first-child_td:last-child]:rounded-tr-xl
             [&_tr:last-child_td:first-child]:rounded-bl-xl
@@ -86,9 +86,10 @@ function ProjectDeploymentsTable({
           {deployments.map((deployment) => (
             <TableRow
               key={deployment.id}
-              className="border-0 hover:bg-transparent"
+              className="border-0  rounded-md hover:bg-transparent   cursor-pointer relative isolate [clip-path:inset(0)] transform-[translateZ(0)]"
             >
               <TableCell className="px-4 py-3">
+                <Link href={`#`} className='static appearance-none hover:bg-accent/50 focus-visible:relative focus-visible:z-5  inset-0 before:absolute before:top-0 before:z-0 before:block before:left-0 before:pointer-events-auto before:h-full before:w-full' />
                 <StatusBadge status={deployment.status} />
               </TableCell>
               <TableCell className="px-4 py-3 font-mono text-xs">
