@@ -19,9 +19,9 @@ const toneStyles = {
 
 function LandingPreview() {
   return (
-    <div className="mx-auto w-full max-w-4xl rounded-xl border border-border bg-card/60 p-1.5 shadow-card">
-      <div className="overflow-hidden rounded-xl border border-border bg-background">
-        <div className="flex items-center gap-2 border-b border-border px-4 py-3">
+    <div className="mx-auto w-full max-w-4xl rounded-3xl border border-border/50 bg-panel bg-linear-to-b from-white/4 to-transparent p-1.5 shadow-float">
+      <div className="overflow-hidden rounded-[1.15rem] border border-border/50 bg-sidebar">
+        <div className="flex items-center gap-2 border-b border-border/50 px-4 py-3">
           <span className="size-2.5 rounded-full bg-destructive/40" />
           <span className="size-2.5 rounded-full bg-warning/40" />
           <span className="size-2.5 rounded-full bg-success/40" />
@@ -45,8 +45,8 @@ function LandingPreview() {
             </span>
           </div>
 
-          <div className="overflow-hidden rounded-xl border border-border">
-            <div className="border-b border-border bg-muted/40 px-4 py-2">
+          <div className="overflow-hidden rounded-xl border border-border/50 bg-secondary/60">
+            <div className="border-b border-border/50 bg-secondary px-4 py-2">
               <span className="font-mono text-xs text-muted-foreground">
                 Build logs
               </span>

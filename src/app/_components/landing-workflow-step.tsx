@@ -8,8 +8,9 @@ function LandingWorkflowStep({
   description: string
 }) {
   return (
-    <div className="flex flex-col gap-3 rounded-xl border border-border bg-card p-6">
-      <span className="flex size-8 items-center justify-center rounded-full border border-border bg-muted font-mono text-sm font-medium text-muted-foreground">
+    // Sits inside the panel band, so the face drops back to the canvas colour.
+    <div className="flex h-full flex-col gap-3 rounded-2xl border border-border/50 bg-sidebar bg-linear-to-b from-white/4 to-transparent p-6 shadow-card">
+      <span className="flex size-8 items-center justify-center rounded-full border border-border/50 bg-secondary bg-linear-to-b from-white/8 to-transparent font-mono text-sm font-medium text-primary shadow-raised">
         {step}
       </span>
 

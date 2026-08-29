@@ -1,5 +1,6 @@
 import { LandingSectionHeading } from "./landing-section-heading"
 import { LandingWorkflowStep } from "./landing-workflow-step"
+import { LandingReveal } from "./landing-reveal"
 
 const steps = [
   {
@@ -21,21 +22,31 @@ const steps = [
 
 function LandingWorkflow() {
   return (
-    <section id="how-it-works" className="border-b border-border bg-muted/30">
+    <section
+      id="how-it-works"
+      className="border-y border-border/50 bg-panel"
+    >
       <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
-        <LandingSectionHeading
-          eyebrow="How it works"
-          title="Three steps between an empty server and a running app"
-        />
+        <LandingReveal>
+          <LandingSectionHeading
+            eyebrow="How it works"
+            title="Three steps between an empty server and a running app"
+          />
+        </LandingReveal>
 
         <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-3">
           {steps.map((step, index) => (
-            <LandingWorkflowStep
+            <LandingReveal
               key={step.title}
-              step={index + 1}
-              title={step.title}
-              description={step.description}
-            />
+              delay={index * 0.1}
+              className="h-full"
+            >
+              <LandingWorkflowStep
+                step={index + 1}
+                title={step.title}
+                description={step.description}
+              />
+            </LandingReveal>
           ))}
         </div>
       </div>

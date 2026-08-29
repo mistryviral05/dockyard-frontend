@@ -1,5 +1,6 @@
 import { LandingSectionHeading } from "./landing-section-heading"
 import { LandingFaqItem } from "./landing-faq-item"
+import { LandingReveal } from "./landing-reveal"
 
 const questions = [
   {
@@ -41,21 +42,28 @@ const questions = [
 
 function LandingFaq() {
   return (
-    <section id="faq" className="border-b border-border bg-muted/30">
+    <section id="faq" className="border-y border-border/50 bg-panel">
       <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
-        <LandingSectionHeading
-          eyebrow="FAQ"
-          title="Frequently asked questions"
-          description="Something else on your mind? Write to us and we will get back to you."
-        />
+        <LandingReveal>
+          <LandingSectionHeading
+            eyebrow="FAQ"
+            title="Frequently asked questions"
+            description="Something else on your mind? Write to us and we will get back to you."
+          />
+        </LandingReveal>
 
         <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-2">
-          {questions.map((item) => (
-            <LandingFaqItem
+          {questions.map((item, index) => (
+            <LandingReveal
               key={item.question}
-              question={item.question}
-              answer={item.answer}
-            />
+              delay={(index % 2) * 0.06}
+              className="h-full"
+            >
+              <LandingFaqItem
+                question={item.question}
+                answer={item.answer}
+              />
+            </LandingReveal>
           ))}
         </div>
       </div>

@@ -14,10 +14,12 @@ import { cn } from "@/shared/lib/utils"
  */
 function LandingAuthButton({
   size = "default",
+  variant = "default",
   className,
   withIcon = false,
 }: {
   size?: "sm" | "default" | "lg"
+  variant?: "default" | "outline"
   className?: string
   withIcon?: boolean
 }) {
@@ -32,13 +34,14 @@ function LandingAuthButton({
     }[size]
 
     return (
-      <Skeleton className={cn("rounded-xl", placeholderSize, className)} />
+      <Skeleton className={cn("rounded-md", placeholderSize, className)} />
     )
   }
 
   return (
     <Button
       size={size}
+      variant={variant}
       nativeButton={false}
       className={className}
       render={<Link href={isSignedIn ? "/apps" : "/sign-in"} />}

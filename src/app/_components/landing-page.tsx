@@ -13,7 +13,7 @@ function LandingPage() {
     <div className="flex min-h-full flex-col bg-background">
       <main className="flex-1">
         {/* The bar and the hero share one background, so the bar floats over it. */}
-        <div className="relative isolate overflow-hidden border-b border-border">
+        <div className="relative isolate overflow-hidden border-b border-border/50">
           {/* A still wash of brand colour behind the fold, no motion involved. */}
           <div
             aria-hidden

@@ -1,13 +1,14 @@
 import { Sparkles } from "lucide-react"
 
 import { LandingAuthButton } from "./landing-auth-button"
+import { LandingReveal } from "./landing-reveal"
 
 function LandingFreeAccess() {
   return (
-    <section id="pricing" className="border-b border-border">
+    <section id="pricing" className="border-b border-border/50">
       <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
-        <div className="flex flex-col items-center gap-6 rounded-xl border border-border bg-card px-6 py-12 text-center">
-          <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
+        <LandingReveal className="flex flex-col items-center gap-6 rounded-3xl border border-border/50 bg-panel bg-linear-to-b from-white/4 to-transparent px-6 py-12 text-center shadow-float">
+          <span className="inline-flex items-center gap-2 rounded-full border border-border/50 bg-secondary bg-linear-to-b from-white/8 to-transparent px-3 py-1 text-xs font-medium text-primary shadow-raised">
             <Sparkles className="size-3.5" />
             Early access
           </span>
@@ -23,7 +24,7 @@ function LandingFreeAccess() {
           </p>
 
           <LandingAuthButton size="lg" withIcon />
-        </div>
+        </LandingReveal>
       </div>
     </section>
   )

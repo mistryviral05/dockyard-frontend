@@ -45,7 +45,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
 
-        <ClerkProvider afterSignOutUrl={'/sign-in'} >
+        <ClerkProvider afterSignOutUrl={'/sign-in'}  >
           <SnackBar>
             <QueryProvider>
               <ClerkZustandSyncer>

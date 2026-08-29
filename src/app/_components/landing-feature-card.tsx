@@ -10,8 +10,9 @@ function LandingFeatureCard({
   description: string
 }) {
   return (
-    <div className="flex flex-col gap-3 rounded-xl border border-border bg-card p-6">
-      <span className="flex size-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
+    // A slab lifted off the canvas: hairline, lit top edge, soft drop.
+    <div className="flex h-full flex-col gap-3 rounded-2xl border border-border/50 bg-panel bg-linear-to-b from-white/4 to-transparent p-6 shadow-float transition-shadow hover:shadow-float-hover">
+      <span className="flex size-9 items-center justify-center rounded-lg border border-border/50 bg-secondary bg-linear-to-b from-white/8 to-transparent text-primary shadow-raised">
         <Icon className="size-4.5" />
       </span>
 

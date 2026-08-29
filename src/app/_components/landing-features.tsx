@@ -9,6 +9,7 @@ import {
 
 import { LandingSectionHeading } from "./landing-section-heading"
 import { LandingFeatureCard } from "./landing-feature-card"
+import { LandingReveal } from "./landing-reveal"
 
 const features = [
   {
@@ -51,22 +52,30 @@ const features = [
 
 function LandingFeatures() {
   return (
-    <section id="features" className="border-b border-border">
+    <section id="features" className="border-b border-border/50">
       <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
-        <LandingSectionHeading
-          eyebrow="What you get"
-          title="Everything a deploy needs, and nothing you have to maintain"
-          description="Dockyard handles the build, the registry, and the rollout. You keep the servers."
-        />
+        <LandingReveal>
+          <LandingSectionHeading
+            eyebrow="What you get"
+            title="Everything a deploy needs, and nothing you have to maintain"
+            description="Dockyard handles the build, the registry, and the rollout. You keep the servers."
+          />
+        </LandingReveal>
 
         <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {features.map((feature) => (
-            <LandingFeatureCard
+          {features.map((feature, index) => (
+            // The cards arrive one after the other as the grid scrolls in.
+            <LandingReveal
               key={feature.title}
-              icon={feature.icon}
-              title={feature.title}
-              description={feature.description}
-            />
+              delay={index * 0.06}
+              className="h-full"
+            >
+              <LandingFeatureCard
+                icon={feature.icon}
+                title={feature.title}
+                description={feature.description}
+              />
+            </LandingReveal>
           ))}
         </div>
       </div>
