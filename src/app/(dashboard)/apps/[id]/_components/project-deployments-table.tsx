@@ -86,10 +86,10 @@ function ProjectDeploymentsTable({
           {deployments.map((deployment) => (
             <TableRow
               key={deployment.id}
-              className="border-0  rounded-md hover:bg-transparent   cursor-pointer relative isolate [clip-path:inset(0)] transform-[translateZ(0)]"
+              className="group border-0  rounded-md hover:bg-transparent   cursor-pointer relative isolate [clip-path:inset(0)] transform-[translateZ(0)] after:absolute after:inset-1 after:-z-10 after:rounded-md after:pointer-events-none after:transition-colors hover:after:bg-accent/50"
             >
               <TableCell className="px-4 py-3">
-                <Link href={`#`} className='static appearance-none hover:bg-accent/50 focus-visible:relative focus-visible:z-5  inset-0 before:absolute before:top-0 before:z-0 before:block before:left-0 before:pointer-events-auto before:h-full before:w-full' />
+                <Link href={`#`} className='static appearance-none focus-visible:relative focus-visible:z-5  inset-0 before:absolute before:inset-1 before:z-0 before:block before:rounded-md before:pointer-events-auto' />
                 <StatusBadge status={deployment.status} />
               </TableCell>
               <TableCell className="px-4 py-3 font-mono text-xs">
@@ -101,20 +101,20 @@ function ProjectDeploymentsTable({
                     <span className="font-mono text-xs">
                       {deployment.commit_sha.slice(0, 7)}
                     </span>
-                    <span className="max-w-56 truncate text-xs text-muted-foreground">
+                    <span className="max-w-56 truncate text-xs text-muted-foreground transition-colors group-hover:text-white">
                       {deployment.commit_message}
                     </span>
                   </div>
                 ) : (
-                  <span className="text-xs text-muted-foreground">
+                  <span className="text-xs text-muted-foreground transition-colors group-hover:text-white">
                     No commit
                   </span>
                 )}
               </TableCell>
-              <TableCell className="px-4 py-3 text-xs text-muted-foreground">
+              <TableCell className="px-4 py-3 text-xs text-muted-foreground transition-colors group-hover:text-white">
                 {deployment.trigger_source === "manual" ? "Manual" : "Webhook"}
               </TableCell>
-              <TableCell className="px-4 py-3 text-xs text-muted-foreground">
+              <TableCell className="px-4 py-3 text-xs text-muted-foreground transition-colors group-hover:text-white">
                 {format(
                   new Date(deployment.started_at ?? deployment.created_at),
                   "d MMM, HH:mm"
