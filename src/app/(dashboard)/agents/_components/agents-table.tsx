@@ -1,6 +1,6 @@
 "use client"
 
-import { Bot } from "lucide-react"
+import { Bot, ChevronRight } from "lucide-react"
 
 import {
   Table,
@@ -64,11 +64,12 @@ function AgentsTable() {
             <TableHead className="h-10 px-4 text-xs font-medium text-muted-foreground">
               Port
             </TableHead>
+            <TableHead className="h-10 w-12 px-4" />
           </TableRow>
         </TableHeader>
 
         <TableBody
-          className=" [&_td]:border-border/40 [&_td]:bg-secondary
+          className=" [&_td]:border-border/40 bg-secondary
             [&_tr:first-child_td:first-child]:rounded-tl-xl
             [&_tr:first-child_td:last-child]:rounded-tr-xl
             [&_tr:last-child_td:first-child]:rounded-bl-xl
@@ -76,8 +77,11 @@ function AgentsTable() {
             "
         >
           {agents.map((agent, index) => (
-            <TableRow key={agent.id} className="border-0 hover:bg-transparent">
-              <TableCell className="px-4 py-3 text-xs tabular-nums text-muted-foreground">
+            <TableRow
+              key={agent.id}
+              className="group relative isolate rounded-md border-0 transform-[translateZ(0)] [clip-path:inset(0)] after:pointer-events-none after:absolute after:inset-1 after:-z-10 after:rounded-md after:transition-colors hover:bg-transparent hover:after:bg-accent/50"
+            >
+              <TableCell className="px-4 py-3 text-xs tabular-nums text-muted-foreground transition-colors group-hover:text-white">
                 {index + 1}
               </TableCell>
               <TableCell className="px-4 py-3">
@@ -93,11 +97,21 @@ function AgentsTable() {
               </TableCell>
               <TableCell className="px-4 py-3 font-mono text-xs">
                 {agent.subdomain ?? (
-                  <span className="text-muted-foreground">—</span>
+                  <span className="text-muted-foreground transition-colors group-hover:text-white">
+                    —
+                  </span>
                 )}
               </TableCell>
-              <TableCell className="px-4 py-3 font-mono text-xs text-muted-foreground">
+              <TableCell className="px-4 py-3 font-mono text-xs text-muted-foreground transition-colors group-hover:text-white">
                 {agent.port}
+              </TableCell>
+              <TableCell className="px-4 py-3">
+                <span
+                  aria-hidden
+                  className="pointer-events-none flex size-8 items-center justify-center text-muted-foreground transition-colors group-hover:text-white"
+                >
+                  <ChevronRight className="size-4" />
+                </span>
               </TableCell>
             </TableRow>
           ))}
