@@ -1,14 +1,13 @@
 "use client"
 
-import { useClerk, UserAvatar, UserButton, useUser } from "@clerk/nextjs"
+import { UserAvatar, useUser } from "@clerk/nextjs"
 
 import { Skeleton } from "@/shared/components/ui/skeleton"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "../ui/dropdown-menu"
-import { ChevronRight, LogOut, Settings } from "lucide-react"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "../ui/dropdown-menu"
+import { UserMenuItems } from "@/shared/components/user/user-menu-items"
 
 function SidebarUserCard() {
   const { isLoaded, user } = useUser()
-  const { openUserProfile,signOut } = useClerk();
 
   if (!isLoaded) {
     return <Skeleton className="h-14 w-full rounded-md" />
@@ -35,18 +34,7 @@ function SidebarUserCard() {
 
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start" className="min-w-64">
-        <DropdownMenuGroup>
-          <DropdownMenuLabel>Account</DropdownMenuLabel>
-          <DropdownMenuItem onClick={() => openUserProfile()} >
-            <Settings className="size-4 text-muted-foreground" /> Manage Account
-            <ChevronRight className="size-4 text-muted-foreground ml-auto" />
-          </DropdownMenuItem>
-          <DropdownMenuItem variant="destructive" onClick={() => signOut()} >
-            <LogOut className="size-4 text-muted-foreground" /> Log Out
-            <ChevronRight className="size-4 text-muted-foreground ml-auto" />
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-
+        <UserMenuItems />
       </DropdownMenuContent>
     </DropdownMenu>
   )

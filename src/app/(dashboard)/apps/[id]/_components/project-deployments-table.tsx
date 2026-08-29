@@ -10,7 +10,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/shared/components/ui/table"
-import { Button } from "@/shared/components/ui/button"
 import { Skeleton } from "@/shared/components/ui/skeleton"
 import { StatusBadge } from "@/shared/components/myui/status-badge"
 import type { Deployment } from "@/features/deployment/types"
@@ -89,7 +88,11 @@ function ProjectDeploymentsTable({
               className="group border-0  rounded-md hover:bg-transparent   cursor-pointer relative isolate [clip-path:inset(0)] transform-[translateZ(0)] after:absolute after:inset-1 after:-z-10 after:rounded-md after:pointer-events-none after:transition-colors hover:after:bg-accent/50"
             >
               <TableCell className="px-4 py-3">
-                <Link href={`#`} className='static appearance-none focus-visible:relative focus-visible:z-5  inset-0 before:absolute before:inset-1 before:z-0 before:block before:rounded-md before:pointer-events-auto' />
+                <Link
+                  href={`/deployments/${deployment.id}`}
+                  aria-label="Open deployment"
+                  className='static appearance-none focus-visible:relative focus-visible:z-5  inset-0 before:absolute before:inset-1 before:z-0 before:block before:rounded-md before:pointer-events-auto'
+                />
                 <StatusBadge status={deployment.status} />
               </TableCell>
               <TableCell className="px-4 py-3 font-mono text-xs">
@@ -121,15 +124,12 @@ function ProjectDeploymentsTable({
                 )}
               </TableCell>
               <TableCell className="px-4 py-3">
-                <Button
-                  variant="ghost"
-                  size="icon-sm"
-                  aria-label="Open deployment"
-                  nativeButton={false}
-                  render={<Link href={`/deployments/${deployment.id}`} />}
+                <span
+                  aria-hidden
+                  className="pointer-events-none flex size-8 items-center justify-center text-muted-foreground transition-colors group-hover:text-white"
                 >
-                  <ChevronRight />
-                </Button>
+                  <ChevronRight className="size-4" />
+                </span>
               </TableCell>
             </TableRow>
           ))}

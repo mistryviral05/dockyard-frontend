@@ -1,4 +1,4 @@
-import { UserButton } from "@clerk/nextjs"
+import { UserAvatarMenu } from "@/shared/components/user/user-avatar-menu"
 
 import { BackButton } from "./back-button"
 import { NewProjectSteps } from "./new-project-steps"
@@ -17,7 +17,9 @@ function NewProjectNavbar() {
           </div>
         </div>
 
-        <UserButton />
+        <div className="flex justify-end">
+          <UserAvatarMenu />
+        </div>
       </div>
     </header>
   )
