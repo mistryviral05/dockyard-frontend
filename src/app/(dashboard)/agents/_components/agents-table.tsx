@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { Bot, ChevronRight } from "lucide-react"
 
 import {
@@ -79,9 +80,14 @@ function AgentsTable() {
           {agents.map((agent, index) => (
             <TableRow
               key={agent.id}
-              className="group relative isolate rounded-md border-0 transform-[translateZ(0)] [clip-path:inset(0)] after:pointer-events-none after:absolute after:inset-1 after:-z-10 after:rounded-md after:transition-colors hover:bg-transparent hover:after:bg-accent/50"
+              className="group relative isolate cursor-pointer rounded-md border-0 transform-[translateZ(0)] [clip-path:inset(0)] after:pointer-events-none after:absolute after:inset-1 after:-z-10 after:rounded-md after:transition-colors hover:bg-transparent hover:after:bg-accent/50"
             >
               <TableCell className="px-4 py-3 text-xs tabular-nums text-muted-foreground transition-colors group-hover:text-white">
+                <Link
+                  href={`/agents/${agent.id}`}
+                  aria-label={`Open agent ${agent.name}`}
+                  className="static inset-0 appearance-none before:pointer-events-auto before:absolute before:inset-1 before:z-0 before:block before:rounded-md focus-visible:relative focus-visible:z-5"
+                />
                 {index + 1}
               </TableCell>
               <TableCell className="px-4 py-3">
