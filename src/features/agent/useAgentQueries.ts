@@ -1,4 +1,5 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { isAxiosError } from "axios"
 import { useApiStore } from "@/store/useApiStore"
 import { GeneralData } from "@/shared/types/responses"
 import { agentService } from "./agent-service"
@@ -56,6 +57,11 @@ class AgentQueries {
             },
             enabled: isApiReady && !!agentId,
             refetchInterval: (query) => {
+                // A missing agent never comes back, a network blip does, so only 404 stops the poll.
+                if (isAxiosError(query.state.error) && query.state.error.response?.status === 404) {
+                    return false
+                }
+
                 const seconds = query.state.data?.data?.poll_seconds || FALLBACK_POLL_SECONDS
                 return seconds * 1000
             },

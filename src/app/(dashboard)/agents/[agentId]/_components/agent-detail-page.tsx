@@ -13,6 +13,8 @@ import { AgentMetricCards } from "./agent-metric-cards"
 import { AgentInfoCard } from "./agent-info-card"
 import { AgentWindowTabs } from "./agent-window-tabs"
 import { AgentCharts } from "./agent-charts"
+import { AgentDetailSkeleton } from "./agent-detail-skeleton"
+import { AgentDetailError } from "./agent-detail-error"
 
 function AgentDetailPage() {
   const params = useParams<{ agentId: string }>()
@@ -26,14 +28,13 @@ function AgentDetailPage() {
     data: metrics,
     isLoading,
     isError,
+    error,
   } = agentQueries.useGetAgentMetrics(agentId, metricsWindow)
 
   if (isLoading) {
     return (
       <div className="mx-auto w-full max-w-7xl">
-        <div className="rounded-xl border border-border bg-background px-6 py-16 text-center text-sm text-muted-foreground">
-          Loading this agent...
-        </div>
+        <AgentDetailSkeleton />
       </div>
     )
   }
@@ -41,9 +42,7 @@ function AgentDetailPage() {
   if (isError || !metrics) {
     return (
       <div className="mx-auto w-full max-w-7xl">
-        <div className="rounded-xl border border-border bg-background px-6 py-16 text-center text-sm text-muted-foreground">
-          Could not load this agent. Please try again.
-        </div>
+        <AgentDetailError error={error} />
       </div>
     )
   }
