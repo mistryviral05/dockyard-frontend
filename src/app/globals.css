@@ -33,6 +33,10 @@
   --color-info-foreground: var(--info-foreground);
   --color-warning: var(--warning);
   --color-warning-foreground: var(--warning-foreground);
+  --color-metric-ok: var(--metric-ok);
+  --color-metric-warn: var(--metric-warn);
+  --color-metric-critical: var(--metric-critical);
+  --color-metric-track: var(--metric-track);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent: var(--accent);
   --color-muted-foreground: var(--muted-foreground);
@@ -91,6 +95,16 @@
   --info-foreground: oklch(0.19 0.05 258.3);
   --warning: oklch(0.79 0.152 73.6);
   --warning-foreground: oklch(0.22 0.06 68.7);
+  /*
+    Gauge and usage thresholds. A monitoring reading carries meaning, so it is
+    allowed its own three steps. They sit on the same green, amber and red as
+    success, warning and destructive, only the track is darker so the unused
+    part of an arc stays quiet.
+  */
+  --metric-ok: oklch(0.717 0.156 162.5);
+  --metric-warn: oklch(0.79 0.152 73.6);
+  --metric-critical: oklch(0.68 0.192 22.2);
+  --metric-track: oklch(0.26 0.006 98);
   --border: oklch(0.352 0.005 98);
   --input: oklch(0.372 0.005 98);
   --ring: oklch(0.9 0.175 98 / 45%);
