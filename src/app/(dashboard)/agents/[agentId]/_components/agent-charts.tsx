@@ -1,14 +1,14 @@
 "use client"
 
-import { Activity, Cpu, MemoryStick } from "lucide-react"
+import { Activity, Cpu, HardDrive, MemoryStick } from "lucide-react"
 
 import type { AgentMetricsPoint } from "@/features/agent/types"
 import { AgentMetricChart } from "./agent-metric-chart"
 
-/** CPU, RAM and Load over the selected window, one card each. */
+/** CPU, RAM, Disk and Load over the selected window, one card each. */
 function AgentCharts({ points }: { points: AgentMetricsPoint[] }) {
   return (
-    <div className="flex flex-col gap-6">
+    <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
       <AgentMetricChart
         label="CPU usage"
         unit="%"
@@ -28,11 +28,20 @@ function AgentCharts({ points }: { points: AgentMetricsPoint[] }) {
       />
 
       <AgentMetricChart
+        label="Disk usage"
+        unit="%"
+        icon={HardDrive}
+        metricKey="disk"
+        points={points}
+        color="var(--chart-3)"
+      />
+
+      <AgentMetricChart
         label="Load average"
         icon={Activity}
         metricKey="load"
         points={points}
-        color="var(--chart-3)"
+        color="var(--chart-4)"
         isPercent={false}
       />
     </div>

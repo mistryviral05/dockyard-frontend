@@ -51,22 +51,18 @@ function AgentDetailPage() {
     <div className="mx-auto flex w-full max-w-7xl flex-col gap-8">
       <AgentDetailHeader metrics={metrics} />
 
-      <AgentQuickStats metrics={metrics} />
-
-      <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-[20rem_1fr]">
+      <div className="grid grid-cols-1 items-start gap-6 xl:grid-cols-[1fr_20rem]">
+        <AgentQuickStats metrics={metrics} />
         <AgentInfoCard metrics={metrics} />
+      </div>
 
-        <div className="flex flex-col gap-6">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <h2 className="font-heading text-base font-medium">Usage</h2>
-            <AgentWindowTabs
-              value={metricsWindow}
-              onChange={setMetricsWindow}
-            />
-          </div>
-
-          <AgentCharts points={metrics.series} />
+      <div className="flex flex-col gap-6">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <h2 className="font-heading text-base font-medium">Usage</h2>
+          <AgentWindowTabs value={metricsWindow} onChange={setMetricsWindow} />
         </div>
+
+        <AgentCharts points={metrics.series} />
       </div>
     </div>
   )

@@ -32,8 +32,8 @@ function AgentQuickStats({ metrics }: { metrics: AgentMetrics }) {
       : null
 
   return (
-    <div className="grid grid-cols-1 gap-4 xl:grid-cols-[1fr_22rem]">
-      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+    <div className="flex flex-col gap-4">
+      <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         <AgentGaugeCard
           label="CPU busy"
           value={current?.cpu_usage ?? null}
@@ -60,7 +60,7 @@ function AgentQuickStats({ metrics }: { metrics: AgentMetrics }) {
         />
       </div>
 
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         <AgentStatTile
           label="CPU cores"
           value={cores ?? UNKNOWN}

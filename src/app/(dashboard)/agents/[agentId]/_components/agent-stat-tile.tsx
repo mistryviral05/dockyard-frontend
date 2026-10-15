@@ -1,5 +1,7 @@
 import type { ReactNode } from "react"
 
+import { Card, CardContent } from "@/shared/components/ui/card"
+
 /** Small reading with no dial, used for the counts next to the gauges. */
 function AgentStatTile({
   label,
@@ -11,15 +13,17 @@ function AgentStatTile({
   hint?: string
 }) {
   return (
-    <div className="flex flex-col gap-1 rounded-xl border border-border/40 bg-card px-4 py-3">
-      <span className="truncate text-xs text-muted-foreground">{label}</span>
-      <span className="truncate font-heading text-lg font-semibold tabular-nums">
-        {value}
-      </span>
-      {hint ? (
-        <span className="truncate text-xs text-muted-foreground">{hint}</span>
-      ) : null}
-    </div>
+    <Card size="sm">
+      <CardContent className="flex flex-col gap-1">
+        <span className="truncate text-xs text-muted-foreground">{label}</span>
+        <span className="truncate font-heading text-lg font-semibold tabular-nums">
+          {value}
+        </span>
+        {hint ? (
+          <span className="truncate text-xs text-muted-foreground">{hint}</span>
+        ) : null}
+      </CardContent>
+    </Card>
   )
 }
 
