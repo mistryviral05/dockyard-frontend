@@ -11,12 +11,14 @@ import {
 import { AgentDetailHeader } from "./agent-detail-header"
 import { AgentMetricCards } from "./agent-metric-cards"
 import { AgentInfoCard } from "./agent-info-card"
+import { AgentWindowTabs } from "./agent-window-tabs"
+import { AgentCharts } from "./agent-charts"
 
 function AgentDetailPage() {
   const params = useParams<{ agentId: string }>()
   const agentId = params?.agentId
 
-  const [metricsWindow] = useState<AgentMetricsWindow>(
+  const [metricsWindow, setMetricsWindow] = useState<AgentMetricsWindow>(
     DEFAULT_AGENT_METRICS_WINDOW
   )
 
@@ -55,11 +57,16 @@ function AgentDetailPage() {
       <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-[20rem_1fr]">
         <AgentInfoCard metrics={metrics} />
 
-        {/* The window selector and the charts land here in the next step. */}
-        <div className="rounded-2xl border border-border/40 bg-sidebar px-6 py-6 text-sm text-muted-foreground">
-          <p>Window: {metricsWindow}</p>
-          <p>Points held: {metrics.series.length}</p>
-          <p>Poll: every {metrics.poll_seconds} seconds</p>
+        <div className="flex flex-col gap-6">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <h2 className="font-heading text-base font-medium">Usage</h2>
+            <AgentWindowTabs
+              value={metricsWindow}
+              onChange={setMetricsWindow}
+            />
+          </div>
+
+          <AgentCharts points={metrics.series} />
         </div>
       </div>
     </div>
