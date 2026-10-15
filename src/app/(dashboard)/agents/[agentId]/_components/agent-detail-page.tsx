@@ -9,7 +9,7 @@ import {
   DEFAULT_AGENT_METRICS_WINDOW,
 } from "@/features/agent/types"
 import { AgentDetailHeader } from "./agent-detail-header"
-import { AgentMetricCards } from "./agent-metric-cards"
+import { AgentQuickStats } from "./agent-quick-stats"
 import { AgentInfoCard } from "./agent-info-card"
 import { AgentWindowTabs } from "./agent-window-tabs"
 import { AgentCharts } from "./agent-charts"
@@ -51,7 +51,7 @@ function AgentDetailPage() {
     <div className="mx-auto flex w-full max-w-7xl flex-col gap-8">
       <AgentDetailHeader metrics={metrics} />
 
-      <AgentMetricCards metrics={metrics} />
+      <AgentQuickStats metrics={metrics} />
 
       <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-[20rem_1fr]">
         <AgentInfoCard metrics={metrics} />

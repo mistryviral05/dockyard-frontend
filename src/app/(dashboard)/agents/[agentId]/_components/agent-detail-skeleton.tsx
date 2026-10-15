@@ -12,16 +12,30 @@ function AgentDetailSkeleton() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {Array.from({ length: 4 }).map((_, index) => (
-          <Card key={index} size="sm">
-            <CardContent className="flex flex-col gap-3">
-              <Skeleton className="h-4 w-16" />
-              <Skeleton className="h-7 w-20" />
-              <Skeleton className="h-1 w-full rounded-full" />
-            </CardContent>
-          </Card>
-        ))}
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-[1fr_22rem]">
+        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+          {Array.from({ length: 4 }).map((_, index) => (
+            <div
+              key={index}
+              className="flex flex-col items-center gap-3 rounded-xl border border-border/40 bg-card px-3 py-4"
+            >
+              <Skeleton className="h-3 w-16" />
+              <Skeleton className="size-20 rounded-full" />
+            </div>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-2 gap-3">
+          {Array.from({ length: 4 }).map((_, index) => (
+            <div
+              key={index}
+              className="flex flex-col gap-2 rounded-xl border border-border/40 bg-card px-4 py-3"
+            >
+              <Skeleton className="h-3 w-14" />
+              <Skeleton className="h-5 w-20" />
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-[20rem_1fr]">
@@ -48,7 +62,7 @@ function AgentDetailSkeleton() {
                 <Skeleton className="h-4 w-28" />
               </CardHeader>
               <CardContent>
-                <Skeleton className="h-[200px] w-full rounded-xl" />
+                <Skeleton className="h-50 w-full rounded-xl" />
               </CardContent>
             </Card>
           ))}
