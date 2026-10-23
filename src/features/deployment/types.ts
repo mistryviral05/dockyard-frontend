@@ -27,6 +27,8 @@ export type Deployment = {
     commit_sha?: string
     commit_message?: string
     image_tag?: string
+    /** Public address traefik routes to, `null` until the container is running. */
+    url: string | null
     error_message: string | null
     started_at: string | null
     completed_at: string | null
@@ -62,6 +64,8 @@ export type LogEvent = {
 export type StatusEvent = {
     event: "status"
     status: DeploymentStatus
+    /** Only sent once the container answers, empty on the earlier moves. */
+    url?: string
     error?: string
     at: string
 }

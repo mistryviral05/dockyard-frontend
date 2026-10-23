@@ -24,6 +24,12 @@ function ProjectDetailPage() {
   const { data: deployments, isLoading: isLoadingDeployments } =
     projectQueries.useGetProjectDeployments(projectId)
 
+  // The project row carries no address, so the matching row of the list holds it.
+  const lastDeploymentId = project?.last_deployment?.id
+  const liveUrl =
+    deployments?.find((item) => item.id === lastDeploymentId && item.status === "running")
+      ?.url ?? null
+
   if (isLoading) {
     return (
       <div className="mx-auto w-full max-w-7xl">
@@ -44,7 +50,7 @@ function ProjectDetailPage() {
 
   return (
     <div className="mx-auto flex w-full max-w-7xl flex-col gap-8">
-      <ProjectHeader project={project} />
+      <ProjectHeader project={project} liveUrl={liveUrl} />
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         <ProjectRepositoryCard project={project} />
@@ -53,7 +59,10 @@ function ProjectDetailPage() {
           agent={project.agent}
           agents={agents ?? []}
         />
-        <ProjectLastDeploymentCard deployment={project.last_deployment} />
+        <ProjectLastDeploymentCard
+          deployment={project.last_deployment}
+          url={liveUrl}
+        />
       </div>
 
       <div className="flex flex-col gap-4">

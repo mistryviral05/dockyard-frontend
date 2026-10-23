@@ -1,18 +1,22 @@
 import Link from "next/link"
 import { format } from "date-fns"
-import { ArrowLeft } from "lucide-react"
+import { ArrowLeft, ExternalLink } from "lucide-react"
 
+import { Button } from "@/shared/components/ui/button"
 import { StatusBadge } from "@/shared/components/myui/status-badge"
 import type { Deployment, DeploymentStatus } from "@/features/deployment/types"
 
 function DeploymentHeader({
   deployment,
   status,
+  url,
   projectName,
 }: {
   deployment: Deployment
   /** Comes from the live channel when it is ahead of the fetched row. */
   status: DeploymentStatus
+  /** Only a running deployment has an address to open. */
+  url: string | null
   projectName: string
 }) {
   const { id, branch, created_at, project_id } = deployment
@@ -34,6 +38,19 @@ function DeploymentHeader({
               Deployment
             </h1>
             <StatusBadge status={status} />
+
+            {status === "running" && url ? (
+              <Button
+                size="sm"
+                nativeButton={false}
+                render={
+                  <a href={url} target="_blank" rel="noopener noreferrer" />
+                }
+              >
+                Visit
+                <ExternalLink data-icon="inline-end" />
+              </Button>
+            ) : null}
           </div>
           <p className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
             <span className="font-mono text-xs">{id}</span>

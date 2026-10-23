@@ -1,5 +1,5 @@
 import { format, formatDistanceStrict } from "date-fns"
-import { Info } from "lucide-react"
+import { ExternalLink, Info } from "lucide-react"
 
 import {
   Card,
@@ -8,6 +8,7 @@ import {
   CardTitle,
 } from "@/shared/components/ui/card"
 import { DetailRow } from "@/shared/components/myui/detail-row"
+import { hostnameOf } from "@/shared/lib/utils"
 import type { Deployment } from "@/features/deployment/types"
 
 /** Blank while the deployment is still running, so the row shows a dash instead. */
@@ -22,7 +23,14 @@ function duration(deployment: Deployment) {
   )
 }
 
-function DeploymentSummaryCard({ deployment }: { deployment: Deployment }) {
+/** The live address can arrive on the channel before the row is refetched. */
+function DeploymentSummaryCard({
+  deployment,
+  url,
+}: {
+  deployment: Deployment
+  url: string | null
+}) {
   const took = duration(deployment)
 
   return (
@@ -64,6 +72,23 @@ function DeploymentSummaryCard({ deployment }: { deployment: Deployment }) {
             <span className="font-mono text-xs">{deployment.image_tag}</span>
           ) : (
             <span className="text-muted-foreground">Not built yet</span>
+          )}
+        </DetailRow>
+
+        <DetailRow label="URL">
+          {url ? (
+            <a
+              href={url}
+              title={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex max-w-full items-center gap-1.5 truncate text-primary transition-colors hover:text-primary/80"
+            >
+              <span className="truncate">{hostnameOf(url)}</span>
+              <ExternalLink className="size-3.5 shrink-0" />
+            </a>
+          ) : (
+            <span className="text-muted-foreground">Not live yet</span>
           )}
         </DetailRow>
 

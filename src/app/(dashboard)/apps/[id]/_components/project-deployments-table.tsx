@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { format } from "date-fns"
-import { ChevronRight } from "lucide-react"
+import { ChevronRight, ExternalLink } from "lucide-react"
 
 import {
   Table,
@@ -93,7 +93,23 @@ function ProjectDeploymentsTable({
                   aria-label="Open deployment"
                   className='static appearance-none focus-visible:relative focus-visible:z-5  inset-0 before:absolute before:inset-1 before:z-0 before:block before:rounded-md before:pointer-events-auto'
                 />
-                <StatusBadge status={deployment.status} />
+                <span className="flex items-center gap-1.5">
+                  <StatusBadge status={deployment.status} />
+                  {deployment.status === "running" && deployment.url ? (
+                    <a
+                      href={deployment.url}
+                      title={deployment.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Open the live app"
+                      // The row itself opens the deployment, this one must not.
+                      onClick={(event) => event.stopPropagation()}
+                      className="relative z-10 text-muted-foreground transition-colors hover:text-foreground"
+                    >
+                      <ExternalLink className="size-3.5" />
+                    </a>
+                  ) : null}
+                </span>
               </TableCell>
               <TableCell className="px-4 py-3 font-mono text-xs">
                 {deployment.branch}

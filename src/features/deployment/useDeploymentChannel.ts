@@ -13,6 +13,8 @@ type ChannelState = {
     lines: LogLine[]
     /** Last status the channel reported, `null` until the first status event. */
     status: DeploymentStatus | null
+    /** Public address of the running container, `null` until one is published. */
+    url: string | null
     /** Only set when the deployment fails. */
     error: string | null
     isConnected: boolean
@@ -24,6 +26,7 @@ const DEPLOYMENT_CHANNEL_PREFIX = "deploy"
 const initialState: ChannelState = {
     lines: [],
     status: null,
+    url: null,
     error: null,
     isConnected: false,
 }
@@ -70,6 +73,8 @@ export function useDeploymentChannel(
                 setState((current) => ({
                     ...current,
                     status: event.status,
+                    // The earlier moves carry no url, so they must not clear the one held.
+                    url: event.url || current.url,
                     error: event.error ?? null,
                 }))
                 return

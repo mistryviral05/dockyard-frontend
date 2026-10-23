@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { formatDistanceToNowStrict } from "date-fns"
-import { Rocket } from "lucide-react"
+import { ExternalLink, Rocket } from "lucide-react"
 
 import {
   Card,
@@ -10,12 +10,16 @@ import {
 } from "@/shared/components/ui/card"
 import { Button } from "@/shared/components/ui/button"
 import { StatusBadge } from "@/shared/components/myui/status-badge"
+import { hostnameOf } from "@/shared/lib/utils"
 import type { ProjectLastDeployment } from "@/features/project/types"
 
 function ProjectLastDeploymentCard({
   deployment,
+  url,
 }: {
   deployment: ProjectLastDeployment | null
+  /** Set only while the last deployment is running. */
+  url: string | null
 }) {
   return (
     <Card size="sm" className="h-full">
@@ -40,6 +44,19 @@ function ProjectLastDeploymentCard({
                 })}
               </span>
             </div>
+
+            {url ? (
+              <a
+                href={url}
+                title={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex max-w-full items-center gap-1.5 text-sm text-primary transition-colors hover:text-primary/80"
+              >
+                <span className="truncate">{hostnameOf(url)}</span>
+                <ExternalLink className="size-3.5 shrink-0" />
+              </a>
+            ) : null}
 
             <Button
               variant="outline"

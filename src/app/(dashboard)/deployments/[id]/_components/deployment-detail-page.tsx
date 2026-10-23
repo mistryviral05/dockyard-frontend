@@ -55,6 +55,7 @@ function DeploymentDetailPage() {
 
   // The channel is ahead of the fetched row once a status event lands.
   const status = channel.status ?? deployment?.status
+  const url = channel.url ?? deployment?.url ?? null
   const isLive = status ? !isTerminalStatus(status) : false
   const errorMessage = channel.error ?? deployment?.error_message ?? null
 
@@ -105,15 +106,18 @@ function DeploymentDetailPage() {
       <DeploymentHeader
         deployment={deployment}
         status={status}
+        url={url}
         projectName={project?.project_name ?? "project"}
       />
 
       <DeploymentTimeline status={status} />
 
-      {errorMessage ? <DeploymentErrorAlert message={errorMessage} /> : null}
+      {errorMessage ? (
+        <DeploymentErrorAlert message={errorMessage} projectId={projectId} />
+      ) : null}
 
       <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-[20rem_1fr] ">
-        <DeploymentSummaryCard deployment={deployment} />
+        <DeploymentSummaryCard deployment={deployment} url={url} />
         <DeploymentLogs
           lines={lines}
           isLive={isLive}

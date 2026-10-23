@@ -9,7 +9,14 @@ import { PROJECT_STACK_LABELS } from "@/features/project/schema"
 import type { ProjectDetail } from "@/features/project/types"
 import { DeployButton } from "./deploy-button"
 
-function ProjectHeader({ project }: { project: ProjectDetail }) {
+function ProjectHeader({
+  project,
+  liveUrl,
+}: {
+  project: ProjectDetail
+  /** Set only while the last deployment is running, the pill then opens it. */
+  liveUrl: string | null
+}) {
   const { id, project_name, project_stack, repository, agent, last_deployment } =
     project
 
@@ -35,7 +42,20 @@ function ProjectHeader({ project }: { project: ProjectDetail }) {
               <h1 className="font-heading text-2xl font-semibold tracking-tight">
                 {project_name}
               </h1>
-              <StatusBadge status={last_deployment?.status ?? null} />
+              {liveUrl ? (
+                <a
+                  href={liveUrl}
+                  title={liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 rounded-full transition-opacity hover:opacity-80"
+                >
+                  <StatusBadge status={last_deployment?.status ?? null} />
+                  <ExternalLink className="size-3.5 text-muted-foreground" />
+                </a>
+              ) : (
+                <StatusBadge status={last_deployment?.status ?? null} />
+              )}
             </div>
 
             <div className="flex flex-wrap items-center gap-2">
