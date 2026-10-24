@@ -2,28 +2,20 @@ import { z } from "zod"
 
 /** Stacks the API accepts for `project_stack`. */
 export const PROJECT_STACKS = [
+  "fastify",
   "nextjs",
-  "nodejs",
-  "react",
-  "go",
-  "fastapi",
-  "python",
-  "django",
   "express",
+  "fastapi",
 ] as const
 
 export type ProjectStack = (typeof PROJECT_STACKS)[number]
 
 /** Labels shown in the stack select. */
 export const PROJECT_STACK_LABELS: Record<ProjectStack, string> = {
+  fastify: "Fastify",
   nextjs: "Next.js",
-  nodejs: "Node.js",
-  react: "React",
-  go: "Golang",
-  fastapi: "FastAPI",
-  python: "Python",
-  django: "Django",
   express: "Express.js",
+  fastapi: "FastAPI",
 }
 
 /** Full POST /v1/projects body. */
